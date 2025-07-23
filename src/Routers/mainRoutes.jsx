@@ -8,6 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Profile from "../dashboard/Profile";
 import MyDonationRequests from "../dashboard/MyDonationRequests";
+import DashboardHome from "../dashboard/DashboardHome";
 
 const mainRoutes = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const mainRoutes = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        index: true,
+        element: <DashboardHome />,
+      },
       {
         path: "profile",
         Component: Profile,

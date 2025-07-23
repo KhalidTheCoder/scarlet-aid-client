@@ -200,7 +200,7 @@ const Profile = () => {
             type="email"
             value={user.email}
             disabled
-            className="border-b-2 w-full p-2 bg-gray-100"
+            className="border-b-2 w-full p-2 text-black bg-gray-100"
           />
         </div>
 
@@ -214,7 +214,7 @@ const Profile = () => {
               value={selectedDistrict}
               onChange={(e) => setSelectedDistrict(e.target.value)}
               required
-              className="w-full p-2 outline-none border-0 border-b-2 bg-white transition-all duration-200 focus:border-[#AF3E3E]"
+              className="w-full p-2 outline-none border-0 border-b-2 text-black bg-white transition-all duration-200 focus:border-[#AF3E3E]"
             >
               <option value="">Select District</option>
               {districts.map((d) => (
@@ -228,7 +228,7 @@ const Profile = () => {
               type="text"
               value={user.district}
               disabled
-              className="w-full p-2 outline-none border-0 border-b-2 bg-gray-100"
+              className="w-full p-2 outline-none border-0 border-b-2 text-black bg-gray-100"
             />
           )}
         </div>
@@ -243,7 +243,7 @@ const Profile = () => {
               value={selectedUpazila}
               onChange={(e) => setSelectedUpazila(e.target.value)}
               required
-              className="w-full p-2 outline-none border-0 border-b-2 bg-white transition-all duration-200 focus:border-[#AF3E3E]"
+              className="w-full p-2 outline-none border-0 border-b-2 text-black bg-white transition-all duration-200 focus:border-[#AF3E3E]"
             >
               <option value="">Select Upazila</option>
               {filteredUpazilas.map((u) => (
@@ -257,7 +257,7 @@ const Profile = () => {
               type="text"
               value={user.upazila}
               disabled
-              className="w-full p-2 outline-none border-0 border-b-2 bg-gray-100"
+              className="w-full p-2 outline-none border-0 border-b-2 text-black bg-gray-100"
             />
           )}
         </div>
@@ -271,7 +271,7 @@ const Profile = () => {
               name="bloodGroup"
               defaultValue={user.bloodGroup}
               required
-              className="w-full p-2 outline-none border-0 border-b-2 bg-white transition-all duration-200 focus:border-[#AF3E3E]"
+              className="w-full p-2 outline-none border-0 border-b-2 text-black bg-white transition-all duration-200 focus:border-[#AF3E3E]"
             >
               {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((bg) => (
                 <option key={bg} value={bg}>
@@ -284,7 +284,7 @@ const Profile = () => {
               type="text"
               value={user.bloodGroup}
               disabled
-              className="w-full p-2 outline-none border-0 border-b-2 bg-gray-100"
+              className="w-full p-2 outline-none border-0 border-b-2 text-black bg-gray-100"
             />
           )}
         </div>
