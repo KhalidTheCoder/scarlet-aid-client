@@ -4,7 +4,6 @@ import { RiMenuAddLine } from "react-icons/ri";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../providers/AuthContext";
 
-
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,10 +14,10 @@ const Header = () => {
       path: "/",
     },
 
-    {
-      name: "Link",
-      path: "",
-    },
+    // {
+    //   name: "Dashboard",
+    //   path: "/dashboard",
+    // },
   ];
   return (
     <nav className="overflow-x-clip text-[#FFFFFF] bg-[#AF3E3E]">
@@ -31,9 +30,7 @@ const Header = () => {
       <div className="text-center"></div>
       <div className="w-11/12 mx-auto py-5 flex justify-between items-center relative">
         <Link to="/" className="logo">
-          <span className="text-xl font-bold">
-            Auth 🍳 Template
-          </span>
+          <span className="text-xl font-bold">Auth 🍳 Template</span>
         </Link>
 
         {/* menu-lg start */}
@@ -45,6 +42,7 @@ const Header = () => {
           ))}
           {user && user?.email ? (
             <>
+              <NavLink to="/dashboard">Dashboard</NavLink>
               <button className="cursor-pointer" onClick={logOut}>
                 Logout
               </button>

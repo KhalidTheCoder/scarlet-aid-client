@@ -4,6 +4,10 @@ import Error from "../pages/Error";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import PrivateRoute from "./PrivateRoute";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Profile from "../dashboard/Profile";
+import MyDonationRequests from "../dashboard/MyDonationRequests";
 
 const mainRoutes = createBrowserRouter([
   {
@@ -26,8 +30,23 @@ const mainRoutes = createBrowserRouter([
     ],
   },
   {
-    
-  }
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "profile",
+        Component: Profile,
+      },
+      {
+        path: "my-donation-requests",
+        Component: MyDonationRequests,
+      },
+    ],
+  },
 ]);
 
 export default mainRoutes;
