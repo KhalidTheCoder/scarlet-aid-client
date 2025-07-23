@@ -22,11 +22,9 @@ const useAxiosSecure = () => {
   );
 
   axiosSecure.interceptors.response.use(
-    (res) => {
-      return res;
-    },
+    (res) => res,
     (error) => {
-      const status = error.status;
+      const status = error.response?.status;
       if (status === 403) {
         navigate("/forbidden");
       } else if (status === 401) {
@@ -36,7 +34,6 @@ const useAxiosSecure = () => {
           })
           .catch(() => {});
       }
-
       return Promise.reject(error);
     }
   );
