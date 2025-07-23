@@ -21,17 +21,17 @@ const Header = () => {
     },
   ];
   return (
-    <nav className="overflow-x-clip">
+    <nav className="overflow-x-clip text-[#FFFFFF] bg-[#AF3E3E]">
       {user && (
         <p className="text-center text-white bg-black py-2 bg-opacity-90">
           Welcome Mr. {user?.displayName} ❤️‍🔥❤️‍🔥. Now You Can Watch All the
           Recipies🍉🍉
         </p>
       )}
-      <div className="text-center bg-slate-400"></div>
+      <div className="text-center"></div>
       <div className="w-11/12 mx-auto py-5 flex justify-between items-center relative">
         <Link to="/" className="logo">
-          <span className="text-xl font-bold text-stone-700">
+          <span className="text-xl font-bold">
             Auth 🍳 Template
           </span>
         </Link>

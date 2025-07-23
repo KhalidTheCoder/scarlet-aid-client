@@ -23,9 +23,11 @@ const mainRoutes = createBrowserRouter([
         path: "registration",
         element: <Register></Register>,
       },
-      {},
     ],
   },
+  {
+    
+  }
 ]);
 
 export default mainRoutes;

@@ -31,9 +31,9 @@ const Login = () => {
       });
   };
   return (
-    <div className=" bg-[url(/bg.png)] bg-contain ">
-      <div className=" bg-white bg-opacity-90 min-h-screen">
-        <div className="w-11/12 mx-auto py-10 m-5 p-5  ">
+    <div className=" bg-[#EAEBD0] bg-contain ">
+      <div className=" bg-[#EAEBD0] bg-opacity-90 min-h-screen">
+        <div className="w-11/12 mx-auto py-10 p-5  ">
           <div className="title mt-5">
             <Title>Login Now</Title>
           </div>
@@ -49,7 +49,7 @@ const Login = () => {
                     <BiEnvelope className="text-3xl text-slate-500"></BiEnvelope>
                   </div>
                   <input
-                    className="outline-none flex-1 border-b-2 p-2 bg-transparent focus:border-orange-400 transition-all  duration-200"
+                    className="outline-none flex-1 border-b-2 p-2 bg-transparent focus:border-[#AF3E3E] transition-all  duration-200"
                     type="email"
                     name="email"
                     placeholder="enter email"
@@ -61,7 +61,7 @@ const Login = () => {
                       <BiKey className="text-3xl text-slate-500"></BiKey>
                     </div>
                     <input
-                      className="outline-none flex-1 border-b-2 p-2 bg-transparent focus:border-orange-400 transition-all  duration-200"
+                      className="outline-none flex-1 border-b-2 p-2 bg-transparent focus:border-[#AF3E3E] transition-all  duration-200"
                       type="password"
                       name="pass"
                       placeholder="enter Password"
@@ -80,7 +80,7 @@ const Login = () => {
                 <input
                   type="submit"
                   value="Login Now"
-                  className="btn cursor-pointer"
+                  className="btn cursor-pointer bg-[#CD5656] text-white"
                 />
               </form>
             </div>
