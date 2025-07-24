@@ -170,7 +170,7 @@ const Profile = () => {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 font-medium">
         <div className="flex items-center justify-center gap-2">
           <img
             src={avatarUrl || user.avatar}

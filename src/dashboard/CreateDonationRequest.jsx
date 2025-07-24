@@ -112,7 +112,6 @@ const CreateDonationRequest = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6 w-full"
           >
-            {/* Requester Info (readonly) */}
             <div className="flex flex-col w-full">
               <label className="font-medium flex items-center gap-2 whitespace-nowrap">
                 <BiUser /> Requester Name
@@ -137,7 +136,6 @@ const CreateDonationRequest = () => {
               />
             </div>
 
-            {/* Editable Fields */}
             <div className="flex flex-col w-full">
               <label className="font-medium">Recipient Name</label>
               <input
