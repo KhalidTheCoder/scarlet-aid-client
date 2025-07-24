@@ -111,7 +111,6 @@ const CreateDonationRequest = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6"
         >
-          
           <div className="flex flex-col">
             <label className="font-medium flex items-center gap-2">
               <BiUser /> Requester Name
@@ -159,6 +158,7 @@ const CreateDonationRequest = () => {
                 const id =
                   districts.find((d) => d.name === e.target.value)?.id || "";
                 setSelectedDistrictId(id);
+                register("recipientDistrict").onChange(e);
               }}
             >
               <option value="">Select District</option>
