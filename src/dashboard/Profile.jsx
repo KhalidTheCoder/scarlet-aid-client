@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { BiImageAdd } from "react-icons/bi";
 import Swal from "sweetalert2";
+import { AuthContext } from "../providers/AuthContext";
 
 const fetchDistricts = async () => {
   const res = await fetch("/src/assets/districtsAndUpazilas/district.json");
@@ -51,7 +52,7 @@ const Profile = () => {
   });
 
   const [isEditing, setIsEditing] = useState(false);
-
+  const { updateUser } = useContext(AuthContext);
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedUpazila, setSelectedUpazila] = useState("");
 
@@ -122,7 +123,7 @@ const Profile = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedData = {
       name: e.target.name.value,
@@ -131,7 +132,22 @@ const Profile = () => {
       upazila: e.target.upazila.value,
       bloodGroup: e.target.bloodGroup.value,
     };
-    updateProfileMutation.mutate(updatedData);
+
+    try {
+      await updateUser({
+        displayName: updatedData.name,
+        photoURL: updatedData.avatar,
+      });
+
+      updateProfileMutation.mutate(updatedData);
+    } catch (error) {
+      console.error("Profile update failed:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Update Failed",
+        text: error.message,
+      });
+    }
   };
 
   return (
