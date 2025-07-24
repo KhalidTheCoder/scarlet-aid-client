@@ -103,17 +103,18 @@ const CreateDonationRequest = () => {
   };
 
   return (
-    <div className="py-10 max-w-5xl mx-auto">
-      <div className="w-11/12 md:w-4/5 mx-auto bg-white p-8 shadow rounded-2xl">
-        <Title>Create Donation Request</Title>
+    <div className="py-10 w-full overflow-x-hidden">
+      <div className="w-full max-w-5xl mx-auto md:px-4">
+        <div className="w-full bg-white p-6 md:p-8 shadow rounded-2xl">
+          <Title>Create Donation Request</Title>
 
-        <div className="max-w-2xl mx-auto">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6"
+            className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6 w-full"
           >
-            <div className="flex flex-col">
-              <label className="font-medium flex items-center gap-2">
+            {/* Requester Info (readonly) */}
+            <div className="flex flex-col w-full">
+              <label className="font-medium flex items-center gap-2 whitespace-nowrap">
                 <BiUser /> Requester Name
               </label>
               <input
@@ -124,8 +125,8 @@ const CreateDonationRequest = () => {
               />
             </div>
 
-            <div className="flex flex-col">
-              <label className="font-medium flex items-center gap-2">
+            <div className="flex flex-col w-full">
+              <label className="font-medium flex items-center gap-2 whitespace-nowrap">
                 <BiEnvelope /> Requester Email
               </label>
               <input
@@ -136,7 +137,8 @@ const CreateDonationRequest = () => {
               />
             </div>
 
-            <div className="flex flex-col">
+            {/* Editable Fields */}
+            <div className="flex flex-col w-full">
               <label className="font-medium">Recipient Name</label>
               <input
                 {...register("recipientName", { required: true })}
@@ -148,7 +150,7 @@ const CreateDonationRequest = () => {
               )}
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
               <label className="font-medium flex items-center gap-2">
                 <BiMap /> District
               </label>
@@ -171,7 +173,7 @@ const CreateDonationRequest = () => {
               </select>
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
               <label className="font-medium flex items-center gap-2">
                 <BiMapAlt /> Upazila
               </label>
@@ -188,7 +190,7 @@ const CreateDonationRequest = () => {
               </select>
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
               <label className="font-medium">Hospital Name</label>
               <input
                 {...register("hospitalName", { required: true })}
@@ -197,7 +199,7 @@ const CreateDonationRequest = () => {
               />
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
               <label className="font-medium">Full Address</label>
               <input
                 {...register("fullAddress", { required: true })}
@@ -206,7 +208,7 @@ const CreateDonationRequest = () => {
               />
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
               <label className="font-medium flex items-center gap-2">
                 <BiDroplet /> Blood Group
               </label>
@@ -225,7 +227,7 @@ const CreateDonationRequest = () => {
               </select>
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
               <label className="font-medium flex items-center gap-2">
                 <BiCalendar /> Date
               </label>
@@ -236,7 +238,7 @@ const CreateDonationRequest = () => {
               />
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
               <label className="font-medium flex items-center gap-2">
                 <BiTime /> Time
               </label>
@@ -247,7 +249,7 @@ const CreateDonationRequest = () => {
               />
             </div>
 
-            <div className="flex flex-col md:col-span-2">
+            <div className="flex flex-col md:col-span-2 w-full">
               <label className="font-medium">Request Message</label>
               <textarea
                 {...register("requestMessage", { required: true })}
@@ -257,7 +259,7 @@ const CreateDonationRequest = () => {
               />
             </div>
 
-            <div className="md:col-span-2 text-right">
+            <div className="md:col-span-2 text-right w-full">
               <button
                 type="submit"
                 disabled={isPending}
