@@ -64,6 +64,17 @@ const DashboardLayout = () => {
               >
                 <span className="font-medium">My Donation Requests</span>
               </NavLink>
+              <NavLink
+                to="/dashboard/create-donation-requests"
+                onClick={() => setIsOpen(false)}
+                className={({ isActive }) =>
+                  `p-2 rounded hover:bg-[#CD5656] ${
+                    isActive ? "bg-[#DA6C6C]" : ""
+                  }`
+                }
+              >
+                <span className="font-medium">Create Donation Requests</span>
+              </NavLink>
               {/* Add more donor-specific links here if needed */}
             </>
           )}
