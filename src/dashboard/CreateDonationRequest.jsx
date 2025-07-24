@@ -103,167 +103,171 @@ const CreateDonationRequest = () => {
   };
 
   return (
-    <div className="min-h-screen py-10">
+    <div className="py-10 max-w-5xl mx-auto">
       <div className="w-11/12 md:w-4/5 mx-auto bg-white p-8 shadow rounded-2xl">
         <Title>Create Donation Request</Title>
 
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6"
-        >
-          <div className="flex flex-col">
-            <label className="font-medium flex items-center gap-2">
-              <BiUser /> Requester Name
-            </label>
-            <input
-              type="text"
-              value={user?.displayName || ""}
-              readOnly
-              className="input input-bordered bg-gray-100"
-            />
-          </div>
+        <div className="max-w-2xl mx-auto">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6"
+          >
+            <div className="flex flex-col">
+              <label className="font-medium flex items-center gap-2">
+                <BiUser /> Requester Name
+              </label>
+              <input
+                type="text"
+                value={user?.displayName || ""}
+                readOnly
+                className="input input-bordered w-full bg-gray-100"
+              />
+            </div>
 
-          <div className="flex flex-col">
-            <label className="font-medium flex items-center gap-2">
-              <BiEnvelope /> Requester Email
-            </label>
-            <input
-              type="email"
-              value={user?.email || ""}
-              readOnly
-              className="input input-bordered bg-gray-100"
-            />
-          </div>
+            <div className="flex flex-col">
+              <label className="font-medium flex items-center gap-2">
+                <BiEnvelope /> Requester Email
+              </label>
+              <input
+                type="email"
+                value={user?.email || ""}
+                readOnly
+                className="input input-bordered w-full bg-gray-100"
+              />
+            </div>
 
-          <div className="flex flex-col">
-            <label className="font-medium">Recipient Name</label>
-            <input
-              {...register("recipientName", { required: true })}
-              className="input input-bordered"
-              placeholder="Recipient Full Name"
-            />
-            {errors.recipientName && (
-              <span className="text-sm text-red-500">Required</span>
-            )}
-          </div>
+            <div className="flex flex-col">
+              <label className="font-medium">Recipient Name</label>
+              <input
+                {...register("recipientName", { required: true })}
+                className="input input-bordered w-full"
+                placeholder="Recipient Full Name"
+              />
+              {errors.recipientName && (
+                <span className="text-sm text-red-500">Required</span>
+              )}
+            </div>
 
-          <div className="flex flex-col">
-            <label className="font-medium flex items-center gap-2">
-              <BiMap /> District
-            </label>
-            <select
-              {...register("recipientDistrict", { required: true })}
-              className="select select-bordered"
-              onChange={(e) => {
-                const id =
-                  districts.find((d) => d.name === e.target.value)?.id || "";
-                setSelectedDistrictId(id);
-                register("recipientDistrict").onChange(e);
-              }}
-            >
-              <option value="">Select District</option>
-              {districts.map((d) => (
-                <option key={d.id} value={d.name}>
-                  {d.name}
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className="flex flex-col">
+              <label className="font-medium flex items-center gap-2">
+                <BiMap /> District
+              </label>
+              <select
+                {...register("recipientDistrict", { required: true })}
+                className="select select-bordered w-full"
+                onChange={(e) => {
+                  const id =
+                    districts.find((d) => d.name === e.target.value)?.id || "";
+                  setSelectedDistrictId(id);
+                  register("recipientDistrict").onChange(e);
+                }}
+              >
+                <option value="">Select District</option>
+                {districts.map((d) => (
+                  <option key={d.id} value={d.name}>
+                    {d.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className="flex flex-col">
-            <label className="font-medium flex items-center gap-2">
-              <BiMapAlt /> Upazila
-            </label>
-            <select
-              {...register("recipientUpazila", { required: true })}
-              className="select select-bordered"
-            >
-              <option value="">Select Upazila</option>
-              {upazilas.map((u) => (
-                <option key={u.id} value={u.name}>
-                  {u.name}
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className="flex flex-col">
+              <label className="font-medium flex items-center gap-2">
+                <BiMapAlt /> Upazila
+              </label>
+              <select
+                {...register("recipientUpazila", { required: true })}
+                className="select select-bordered w-full"
+              >
+                <option value="">Select Upazila</option>
+                {upazilas.map((u) => (
+                  <option key={u.id} value={u.name}>
+                    {u.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className="flex flex-col">
-            <label className="font-medium">Hospital Name</label>
-            <input
-              {...register("hospitalName", { required: true })}
-              className="input input-bordered"
-              placeholder="e.g. Dhaka Medical College"
-            />
-          </div>
+            <div className="flex flex-col">
+              <label className="font-medium">Hospital Name</label>
+              <input
+                {...register("hospitalName", { required: true })}
+                className="input input-bordered w-full"
+                placeholder="e.g. Dhaka Medical College"
+              />
+            </div>
 
-          <div className="flex flex-col">
-            <label className="font-medium">Full Address</label>
-            <input
-              {...register("fullAddress", { required: true })}
-              className="input input-bordered"
-              placeholder="e.g. Zahir Raihan Rd, Dhaka"
-            />
-          </div>
+            <div className="flex flex-col">
+              <label className="font-medium">Full Address</label>
+              <input
+                {...register("fullAddress", { required: true })}
+                className="input input-bordered w-full"
+                placeholder="e.g. Zahir Raihan Rd, Dhaka"
+              />
+            </div>
 
-          <div className="flex flex-col">
-            <label className="font-medium flex items-center gap-2">
-              <BiDroplet /> Blood Group
-            </label>
-            <select
-              {...register("bloodGroup", { required: true })}
-              className="select select-bordered"
-            >
-              <option value="">Select Group</option>
-              {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((bg) => (
-                <option key={bg} value={bg}>
-                  {bg}
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className="flex flex-col">
+              <label className="font-medium flex items-center gap-2">
+                <BiDroplet /> Blood Group
+              </label>
+              <select
+                {...register("bloodGroup", { required: true })}
+                className="select select-bordered w-full"
+              >
+                <option value="">Select Group</option>
+                {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(
+                  (bg) => (
+                    <option key={bg} value={bg}>
+                      {bg}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
 
-          <div className="flex flex-col">
-            <label className="font-medium flex items-center gap-2">
-              <BiCalendar /> Date
-            </label>
-            <input
-              type="date"
-              {...register("donationDate", { required: true })}
-              className="input input-bordered"
-            />
-          </div>
+            <div className="flex flex-col">
+              <label className="font-medium flex items-center gap-2">
+                <BiCalendar /> Date
+              </label>
+              <input
+                type="date"
+                {...register("donationDate", { required: true })}
+                className="input input-bordered w-full"
+              />
+            </div>
 
-          <div className="flex flex-col">
-            <label className="font-medium flex items-center gap-2">
-              <BiTime /> Time
-            </label>
-            <input
-              type="time"
-              {...register("donationTime", { required: true })}
-              className="input input-bordered"
-            />
-          </div>
+            <div className="flex flex-col">
+              <label className="font-medium flex items-center gap-2">
+                <BiTime /> Time
+              </label>
+              <input
+                type="time"
+                {...register("donationTime", { required: true })}
+                className="input input-bordered w-full"
+              />
+            </div>
 
-          <div className="flex flex-col md:col-span-2">
-            <label className="font-medium">Request Message</label>
-            <textarea
-              {...register("requestMessage", { required: true })}
-              className="textarea textarea-bordered"
-              rows={4}
-              placeholder="Explain why you need the blood in detail..."
-            />
-          </div>
+            <div className="flex flex-col md:col-span-2">
+              <label className="font-medium">Request Message</label>
+              <textarea
+                {...register("requestMessage", { required: true })}
+                className="textarea textarea-bordered w-full"
+                rows={4}
+                placeholder="Explain why you need the blood in detail..."
+              />
+            </div>
 
-          <div className="md:col-span-2 text-right">
-            <button
-              type="submit"
-              disabled={isPending}
-              className="btn btn-primary"
-            >
-              {isPending ? "Submitting..." : "Submit Request"}
-            </button>
-          </div>
-        </form>
+            <div className="md:col-span-2 text-right">
+              <button
+                type="submit"
+                disabled={isPending}
+                className="btn bg-[#CD5656] text-white"
+              >
+                {isPending ? "Submitting..." : "Submit Request"}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
