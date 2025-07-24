@@ -9,6 +9,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Profile from "../dashboard/Profile";
 import MyDonationRequests from "../dashboard/MyDonationRequests";
 import DashboardHome from "../dashboard/DashboardHome";
+import CreateDonationRequest from "../dashboard/CreateDonationRequest";
 
 const mainRoutes = createBrowserRouter([
   {
@@ -40,15 +41,35 @@ const mainRoutes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashboardHome />,
+        element: (
+          <PrivateRoute>
+            <DashboardHome />
+          </PrivateRoute>
+        ),
       },
       {
         path: "profile",
-        Component: Profile,
+        element: (
+          <PrivateRoute>
+            <Profile></Profile>
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-donation-requests",
-        Component: MyDonationRequests,
+        element: (
+          <PrivateRoute>
+            <MyDonationRequests></MyDonationRequests>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "create-donation-requests",
+        element: (
+          <PrivateRoute>
+            <CreateDonationRequest></CreateDonationRequest>
+          </PrivateRoute>
+        ),
       },
     ],
   },
