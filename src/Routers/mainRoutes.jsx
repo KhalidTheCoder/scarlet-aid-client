@@ -10,6 +10,9 @@ import Profile from "../dashboard/Profile";
 import MyDonationRequests from "../dashboard/MyDonationRequests";
 import DashboardHome from "../dashboard/DashboardHome";
 import CreateDonationRequest from "../dashboard/CreateDonationRequest";
+import EditDonationRequest from "../dashboard/EditDonationRequest";
+import DonationDetails from "../dashboard/DonationDetails";
+import AllUsers from "../dashboard/AllUsers";
 
 const mainRoutes = createBrowserRouter([
   {
@@ -68,6 +71,30 @@ const mainRoutes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <CreateDonationRequest></CreateDonationRequest>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "donation-requests/:id",
+        element: (
+          <PrivateRoute>
+            <DonationDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/donation-requests/:id/edit",
+        element: (
+          <PrivateRoute>
+            <EditDonationRequest></EditDonationRequest>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/manage-users",
+        element: (
+          <PrivateRoute>
+            <AllUsers></AllUsers>
           </PrivateRoute>
         ),
       },

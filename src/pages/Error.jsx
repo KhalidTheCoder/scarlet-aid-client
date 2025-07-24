@@ -7,7 +7,7 @@ const Error = () => {
   return (
     <div>
       <Header></Header>
-      <div className="flex min-h-screen items-center justify-center">Error..</div>
+      <div className="flex items-center justify-center">Error..</div>
     </div>
   );
 };

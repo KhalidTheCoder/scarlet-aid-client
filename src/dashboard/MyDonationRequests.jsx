@@ -1,9 +1,12 @@
 import React, { useContext, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 import { AuthContext } from "../providers/AuthContext";
-import Loading from "../pages/Loading";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Title from "../components/Title";
+import Loading from "../pages/Loading";
+import Table from "../components/Table";
+import Swal from "sweetalert2";
 
 const fetchDonationRequests = async ({ queryKey }) => {
   const [, { email, status, page, limit }, axiosSecure] = queryKey;
@@ -19,8 +22,10 @@ const fetchDonationRequests = async ({ queryKey }) => {
 };
 
 const MyDonationRequests = () => {
-  const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [statusFilter, setStatusFilter] = useState("all");
   const [page, setPage] = useState(1);
@@ -37,18 +42,132 @@ const MyDonationRequests = () => {
     keepPreviousData: true,
   });
 
+  const updateStatusMutation = useMutation({
+    mutationFn: async ({ id, status }) =>
+      axiosSecure.patch(`/donation-requests/${id}`, { status }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["myDonationRequests"]);
+      Swal.fire("Updated!", "Donation status updated.", "success");
+    },
+    onError: () => Swal.fire("Error", "Failed to update status.", "error"),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id) => await axiosSecure.delete(`/donation-requests/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["myDonationRequests"]);
+      Swal.fire("Deleted!", "Request deleted successfully.", "success");
+    },
+    onError: () => Swal.fire("Error", "Failed to delete request.", "error"),
+  });
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This will permanently delete the request.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) deleteMutation.mutate(id);
+    });
+  };
+
   if (isLoading) return <Loading />;
   if (isError)
     return <p className="text-red-500 text-center">Failed to load requests.</p>;
 
   const { requests = [], totalPages = 1 } = data || {};
 
+  const columns = [
+    { header: "Recipient", accessor: "recipientName" },
+    {
+      header: "Location",
+      accessor: "recipientDistrict",
+      cell: (val, row) => `${row.recipientDistrict}, ${row.recipientUpazila}`,
+    },
+    {
+      header: "Date",
+      accessor: "donationDate",
+      cell: (val) => new Date(val).toLocaleDateString(),
+    },
+    { header: "Time", accessor: "donationTime" },
+    { header: "Blood Group", accessor: "bloodGroup" },
+    {
+      header: "Status",
+      accessor: "status",
+      cell: (val) => <span className="capitalize">{val}</span>,
+    },
+    {
+      header: "Donor Info",
+      accessor: "donorName",
+      cell: (_, row) =>
+        row.status === "inprogress" ? (
+          <div className="text-xs">
+            <p>{row.donorName}</p>
+            <p className="text-gray-500">{row.donorEmail}</p>
+          </div>
+        ) : (
+          "-"
+        ),
+    },
+    {
+      header: "Actions",
+      accessor: "actions",
+      cell: (_, row) => (
+        <div className="flex flex-wrap gap-2">
+          {row.status === "inprogress" && (
+            <>
+              <button
+                className="btn btn-xs btn-success"
+                onClick={() =>
+                  updateStatusMutation.mutate({ id: row._id, status: "done" })
+                }
+              >
+                Done
+              </button>
+              <button
+                className="btn btn-xs btn-warning"
+                onClick={() =>
+                  updateStatusMutation.mutate({ id: row._id, status: "canceled" })
+                }
+              >
+                Cancel
+              </button>
+            </>
+          )}
+          <button
+            className="btn btn-xs btn-info"
+            onClick={() => navigate(`/dashboard/donation-requests/${row._id}/edit`)}
+          >
+            Edit
+          </button>
+          <button
+            className="btn btn-xs btn-error"
+            onClick={() => handleDelete(row._id)}
+          >
+            Delete
+          </button>
+          <button
+            className="btn btn-xs btn-primary"
+            onClick={() => navigate(`/dashboard/donation-requests/${row._id}`)}
+          >
+            View
+          </button>
+        </div>
+      ),
+    },
+  ];
+
   return (
-    <div className="min-h-screen p-4 overflow-x-hidden">
-      <div className="mb-5">
+    <div>
+      <div className="mb-20">
         <Title>My Donation Requests</Title>
       </div>
 
+      
       <div className="my-5">
         <select
           value={statusFilter}
@@ -58,106 +177,45 @@ const MyDonationRequests = () => {
           }}
           className="select select-bordered font-medium w-full max-w-xs"
         >
-          <option className="font-medium" value="all">
-            All
-          </option>
-          <option className="font-medium" value="pending">
-            Pending
-          </option>
-          <option className="font-medium" value="inprogress">
-            In Progress
-          </option>
-          <option className="font-medium" value="done">
-            Done
-          </option>
-          <option className="font-medium" value="canceled">
-            Canceled
-          </option>
+          <option value="all">All</option>
+          <option value="pending">Pending</option>
+          <option value="inprogress">In Progress</option>
+          <option value="done">Done</option>
+          <option value="canceled">Canceled</option>
         </select>
       </div>
 
-      <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 hidden md:block">
-        <table className="table table-zebra text-sm min-w-full">
-          <thead className="text-lg">
-            <tr>
-              <th>#</th>
-              <th>Recipient</th>
-              <th>Blood Group</th>
-              <th>Hospital</th>
-              <th>Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody className="font-medium">
-            {requests.length > 0 ? (
-              requests.map((req, index) => (
-                <tr key={req._id}>
-                  <th>{(page - 1) * limit + index + 1}</th>
-                  <td>{req.recipientName}</td>
-                  <td>{req.bloodGroup}</td>
-                  <td>{req.hospitalName}</td>
-                  <td>{new Date(req.donationDate).toLocaleDateString()}</td>
-                  <td className="capitalize">{req.status}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan="6"
-                  className="text-center font-bold text-lg text-gray-500"
-                >
-                  No requests found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      
+      <Table
+        columns={columns}
+        data={requests}
+        currentPage={page}
+        limit={limit}
+        emptyMessage="No donation requests found."
+      />
 
-      <div className="grid gap-4 md:hidden">
-        {requests.length > 0 ? (
-          requests.map((req) => (
-            <div
-              key={req._id}
-              className="p-4 rounded-lg font-medium bg-base-100 shadow"
-            >
-              <p className="font-semibold">{req.recipientName}</p>
-              <p className="text-sm text-gray-500">{req.hospitalName}</p>
-              <div className="flex justify-between text-sm mt-2">
-                <span>{req.bloodGroup}</span>
-                <span>{new Date(req.donationDate).toLocaleDateString()}</span>
-              </div>
-              <span className="mt-2 inline-block text-xs px-2 py-1 rounded bg-gray-200 capitalize">
-                {req.status}
-              </span>
-            </div>
-          ))
-        ) : (
-          <p className="text-center text-gray-500">
-            No donation requests found.
-          </p>
-        )}
-      </div>
-
-      <div className="join mt-6 flex justify-center">
-        <button
-          className="join-item btn"
-          disabled={page === 1}
-          onClick={() => setPage((p) => p - 1)}
-        >
-          «
-        </button>
-        <button className="join-item btn">
-          Page {page} of {totalPages}
-        </button>
-        <button
-          className="join-item btn"
-          disabled={page === totalPages}
-          onClick={() => setPage((p) => p + 1)}
-        >
-          »
-        </button>
-      </div>
+      
+      {totalPages > 1 && (
+        <div className="join mt-6 flex justify-center">
+          <button
+            className="join-item btn"
+            disabled={page === 1}
+            onClick={() => setPage((p) => p - 1)}
+          >
+            «
+          </button>
+          <button className="join-item btn">
+            Page {page} of {totalPages}
+          </button>
+          <button
+            className="join-item btn"
+            disabled={page === totalPages}
+            onClick={() => setPage((p) => p + 1)}
+          >
+            »
+          </button>
+        </div>
+      )}
     </div>
   );
 };
