@@ -17,6 +17,9 @@ import AllDonationRequests from "../dashboard/AllDonationRequests";
 import ContentManagement from "../dashboard/ContentManagement";
 import AddBlog from "../dashboard/AddBlog";
 import SearchDonors from "../pages/SearchDonors";
+import DonationRequests from "../pages/DonationRequests";
+import Blog from "../pages/Blog";
+import BlogDetails from "../pages/BlogDetails";
 
 const mainRoutes = createBrowserRouter([
   {
@@ -39,6 +42,18 @@ const mainRoutes = createBrowserRouter([
       {
         path: "searchDonor",
         element: <SearchDonors></SearchDonors>,
+      },
+      {
+        path: "donationRequest",
+        element: <DonationRequests></DonationRequests>
+      },
+      {
+        path: "blogs",
+        element: <Blog></Blog>
+      },
+      {
+        path: "blog-details/:id",
+        element: <BlogDetails></BlogDetails>
       },
     ],
   },

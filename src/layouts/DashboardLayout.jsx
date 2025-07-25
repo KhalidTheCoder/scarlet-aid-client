@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { NavLink, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 import { AuthContext } from "../providers/AuthContext";
 import { FiMenu, FiX } from "react-icons/fi";
 import useUserRole from "../hooks/useUserRole";
@@ -26,7 +26,9 @@ const DashboardLayout = () => {
         } md:translate-x-0 transition-transform duration-200 flex flex-col z-50`}
       >
         <div className="p-5 font-bold text-xl border-b border-[#CD5656]">
-          Scarlet Aid
+          <Link to="/">
+           Scarlet Aid
+          </Link>
         </div>
         <nav className="flex flex-col p-4 space-y-2">
           {/* Always visible links */}

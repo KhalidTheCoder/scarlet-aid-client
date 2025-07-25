@@ -17,6 +17,14 @@ const Header = () => {
       name: "Search Donor",
       path: "/searchDonor",
     },
+    {
+      name: "Donation Request",
+      path: "/donationRequest",
+    },
+    {
+      name: "Blogs",
+      path: "/blogs",
+    },
 
     // {
     //   name: "Dashboard",
