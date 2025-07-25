@@ -4,7 +4,9 @@ import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { Check, Eye, Pencil, Trash2, XCircle } from "lucide-react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import useUserRole from "../hooks/useUserRole";
 import Table from "../components/Table";
+import Loading from "../pages/Loading";
 
 const AllDonationRequests = () => {
   const [statusFilter, setStatusFilter] = useState("");
@@ -14,6 +16,7 @@ const AllDonationRequests = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
+  const { role, isLoading: roleLoading } = useUserRole();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["allDonationRequests", currentPage, statusFilter],
@@ -28,9 +31,9 @@ const AllDonationRequests = () => {
       return res.data;
     },
     keepPreviousData: true,
+    enabled: !roleLoading,
   });
 
-  // Mutation for updating status
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }) =>
       axiosSecure.patch(`/donation-requests/${id}/status`, { status }),
@@ -41,7 +44,6 @@ const AllDonationRequests = () => {
     onError: () => Swal.fire("Error", "Failed to update status.", "error"),
   });
 
-  // Mutation for deleting request
   const deleteMutation = useMutation({
     mutationFn: async (id) => axiosSecure.delete(`/donation-requests/${id}`),
     onSuccess: () => {
@@ -65,7 +67,7 @@ const AllDonationRequests = () => {
     });
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (roleLoading || isLoading) return <Loading />;
   if (isError)
     return <p className="text-red-500 text-center">Failed to load requests.</p>;
 
@@ -88,11 +90,7 @@ const AllDonationRequests = () => {
     {
       header: "Status",
       accessor: "status",
-      cell: (val) => (
-        <span className="capitalize">
-          {val}
-        </span>
-      ),
+      cell: (val) => <span className="capitalize">{val}</span>,
     },
     {
       header: "Actions",
@@ -104,7 +102,9 @@ const AllDonationRequests = () => {
               <button
                 className="btn btn-xs btn-success"
                 title="Mark as Done"
-                onClick={() => updateStatusMutation.mutate({ id, status: "done" })}
+                onClick={() =>
+                  updateStatusMutation.mutate({ id, status: "done" })
+                }
               >
                 <Check className="w-4 h-4" />
               </button>
@@ -119,27 +119,34 @@ const AllDonationRequests = () => {
               </button>
             </>
           )}
-          <button
-            className="btn btn-xs btn-info"
-            title="Edit Request"
-            onClick={() => navigate(`/dashboard/donation-requests/${id}/edit`)}
-          >
-            <Pencil className="w-4 h-4" />
-          </button>
-          <button
-            className="btn btn-xs btn-error"
-            title="Delete Request"
-            onClick={() => handleDelete(id)}
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-          <button
-            className="btn btn-xs btn-primary"
-            title="View Request"
-            onClick={() => navigate(`/dashboard/donation-requests/${id}`)}
-          >
-            <Eye className="w-4 h-4" />
-          </button>
+
+          {role === "admin" && (
+            <>
+              <button
+                className="btn btn-xs btn-info"
+                title="Edit Request"
+                onClick={() =>
+                  navigate(`/dashboard/donation-requests/${id}/edit`)
+                }
+              >
+                <Pencil className="w-4 h-4" />
+              </button>
+              <button
+                className="btn btn-xs btn-error"
+                title="Delete Request"
+                onClick={() => handleDelete(id)}
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+              <button
+                className="btn btn-xs btn-primary"
+                title="View Request"
+                onClick={() => navigate(`/dashboard/donation-requests/${id}`)}
+              >
+                <Eye className="w-4 h-4" />
+              </button>
+            </>
+          )}
         </div>
       ),
     },

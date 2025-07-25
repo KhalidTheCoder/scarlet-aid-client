@@ -82,7 +82,7 @@ const DashboardLayout = () => {
           {!roleLoading && role === "volunteer" && (
             <>
               <NavLink
-                to="/dashboard/volunteer-assignments"
+                to="/dashboard/manage-donations"
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
                   `p-2 rounded hover:bg-[#CD5656] ${
@@ -90,7 +90,18 @@ const DashboardLayout = () => {
                   }`
                 }
               >
-                <span className="font-medium">Volunteer Assignments</span>
+                <span className="font-medium">Manage Donations</span>
+              </NavLink>
+              <NavLink
+                to="/dashboard/content-management"
+                onClick={() => setIsOpen(false)}
+                className={({ isActive }) =>
+                  `p-2 rounded hover:bg-[#CD5656] ${
+                    isActive ? "bg-[#DA6C6C]" : ""
+                  }`
+                }
+              >
+                <span className="font-medium">Manage Content</span>
               </NavLink>
               {/* Add more volunteer-specific links here */}
             </>
