@@ -27,7 +27,8 @@ const ContentManagement = () => {
 
   // Mutations
   const publishMutation = useMutation({
-    mutationFn: (id) => axiosSecure.patch(`/blogs/${id}/publish`),
+    mutationFn: (id) =>
+      axiosSecure.patch(`/blogs/${id}/status`, { status: "published" }),
     onSuccess: () => {
       Swal.fire("Success", "Blog published.", "success");
       queryClient.invalidateQueries(["blogs", filter, axiosSecure]);
@@ -35,13 +36,13 @@ const ContentManagement = () => {
   });
 
   const unpublishMutation = useMutation({
-    mutationFn: (id) => axiosSecure.patch(`/blogs/${id}/unpublish`),
+    mutationFn: (id) =>
+      axiosSecure.patch(`/blogs/${id}/status`, { status: "draft" }),
     onSuccess: () => {
       Swal.fire("Success", "Blog unpublished.", "success");
       queryClient.invalidateQueries(["blogs", filter, axiosSecure]);
     },
   });
-
   const deleteMutation = useMutation({
     mutationFn: (id) => axiosSecure.delete(`/blogs/${id}`),
     onSuccess: () => {
@@ -66,7 +67,7 @@ const ContentManagement = () => {
   if (isLoading || roleLoading) return <Loading />;
 
   return (
-    <div className="px-4 py-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+    <div className="px-4 py-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 mx-auto">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Content Management</h1>
         <button
@@ -94,58 +95,60 @@ const ContentManagement = () => {
         <p className="text-gray-500">No blogs found.</p>
       ) : (
         <div className="grid gap-8 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
-          {blogs.map((blog) => (
-            <div
-              key={blog._id}
-              className="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"
-            >
-              <img
-                src={blog.thumbnail}
-                className="object-cover w-full h-64"
-                alt={blog.title}
-              />
-              <div className="p-5 border border-t-0">
-                <p className="mb-3 text-xs font-semibold tracking-wide uppercase">
-                  {blog.category || "General"}{" "}
-                  <span className="text-gray-600">
-                    — {new Date(blog.createdAt).toLocaleDateString()}
-                  </span>
-                </p>
-                <h2 className="inline-block mb-3 text-2xl font-bold leading-5">
-                  {blog.title}
-                </h2>
-                <p className="mb-2 text-gray-700 line-clamp-3">
-                  {blog.content.replace(/<[^>]+>/g, "").slice(0, 100)}...
-                </p>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {role === "admin" && blog.status === "draft" && (
-                    <button
-                      onClick={() => publishMutation.mutate(blog._id)}
-                      className="btn btn-xs btn-success"
-                    >
-                      Publish
-                    </button>
-                  )}
-                  {role === "admin" && blog.status === "published" && (
-                    <button
-                      onClick={() => unpublishMutation.mutate(blog._id)}
-                      className="btn btn-xs btn-warning"
-                    >
-                      Unpublish
-                    </button>
-                  )}
-                  {role === "admin" && (
-                    <button
-                      onClick={() => handleDelete(blog._id)}
-                      className="btn btn-xs btn-error"
-                    >
-                      Delete
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
+         {blogs.map((blog) => (
+  <div
+    key={blog._id}
+    className="card bg-base-100 w-full sm:w-96 shadow-sm"
+  >
+    <figure>
+      <img
+        src={blog.thumbnail}
+        alt={blog.title}
+        className="object-cover w-full h-48"
+      />
+    </figure>
+    <div className="card-body">
+      <h2 className="card-title">
+        {blog.title}
+        {blog.status === "published" && (
+          <div className="badge badge-secondary">PUBLISHED</div>
+        )}
+        {blog.status === "draft" && (
+          <div className="badge badge-outline">DRAFT</div>
+        )}
+      </h2>
+  <p className="text-gray-700">
+  {blog.content.replace(/<[^>]+>/g, "")}
+</p>
+      <div className="card-actions justify-end flex flex-wrap gap-2 mt-2">
+        {role === "admin" && blog.status === "draft" && (
+          <button
+            onClick={() => publishMutation.mutate(blog._id)}
+            className="btn btn-xs btn-success"
+          >
+            Publish
+          </button>
+        )}
+        {role === "admin" && blog.status === "published" && (
+          <button
+            onClick={() => unpublishMutation.mutate(blog._id)}
+            className="btn btn-xs btn-warning"
+          >
+            Unpublish
+          </button>
+        )}
+        {role === "admin" && (
+          <button
+            onClick={() => handleDelete(blog._id)}
+            className="btn btn-xs btn-error"
+          >
+            Delete
+          </button>
+        )}
+      </div>
+    </div>
+  </div>
+))}
         </div>
       )}
     </div>
