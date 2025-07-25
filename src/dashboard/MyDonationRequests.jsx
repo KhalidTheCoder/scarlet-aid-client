@@ -112,7 +112,7 @@ const MyDonationRequests = () => {
             <p className="text-gray-500">{row.donorEmail}</p>
           </div>
         ) : (
-          "-"
+          <span className="text-sm italic text-gray-400">Not assigned</span>
         ),
     },
     {
