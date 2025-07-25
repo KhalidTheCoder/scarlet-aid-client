@@ -46,7 +46,7 @@ const DonationDetails = () => {
     },
     onSuccess: () => {
       Swal.fire("✅ Success!", "You have confirmed your donation.", "success");
-      navigate("/dashboard/my-donation-requests");
+      navigate("/dashboard");
     },
     onError: () => {
       Swal.fire("❌ Error!", "Failed to confirm donation.", "error");

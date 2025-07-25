@@ -16,6 +16,7 @@ import AllUsers from "../dashboard/AllUsers";
 import AllDonationRequests from "../dashboard/AllDonationRequests";
 import ContentManagement from "../dashboard/ContentManagement";
 import AddBlog from "../dashboard/AddBlog";
+import SearchDonors from "../pages/SearchDonors";
 
 const mainRoutes = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const mainRoutes = createBrowserRouter([
       {
         path: "registration",
         element: <Register></Register>,
+      },
+      {
+        path: "searchDonor",
+        element: <SearchDonors></SearchDonors>,
       },
     ],
   },
