@@ -13,6 +13,9 @@ import CreateDonationRequest from "../dashboard/CreateDonationRequest";
 import EditDonationRequest from "../dashboard/EditDonationRequest";
 import DonationDetails from "../dashboard/DonationDetails";
 import AllUsers from "../dashboard/AllUsers";
+import AllDonationRequests from "../dashboard/AllDonationRequests";
+import ContentManagement from "../dashboard/ContentManagement";
+import AddBlog from "../dashboard/AddBlog";
 
 const mainRoutes = createBrowserRouter([
   {
@@ -95,6 +98,30 @@ const mainRoutes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AllUsers></AllUsers>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/manage-donations",
+        element: (
+          <PrivateRoute>
+            <AllDonationRequests></AllDonationRequests>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/content-management",
+        element: (
+          <PrivateRoute>
+            <ContentManagement />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/add-blog",
+        element: (
+          <PrivateRoute>
+            <AddBlog />
           </PrivateRoute>
         ),
       },

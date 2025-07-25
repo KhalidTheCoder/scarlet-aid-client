@@ -3,7 +3,13 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Table from "../components/Table";
-
+import {
+  Ban,
+  CheckCircle2,
+  Handshake,
+  ShieldPlus,
+  Settings2,
+} from "lucide-react";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -12,8 +18,11 @@ const AllUsers = () => {
   const [page, setPage] = useState(1);
   const limit = 10;
 
-  
-  const { data: usersData, isLoading, isError } = useQuery({
+  const {
+    data: usersData,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["users", page],
     queryFn: async () => {
       const res = await axiosSecure.get("/users", {
@@ -63,70 +72,104 @@ const AllUsers = () => {
   if (isLoading) return <p>Loading users...</p>;
   if (isError) return <p>Error loading users!</p>;
 
- 
   const columns = [
-    { header: "Avatar", accessor: "avatar", cell: (value, row) => (
-        <img src={value || row.image} alt={row.name} className="w-10 h-10 rounded-full" />
-      )
+    {
+      header: "Avatar",
+      accessor: "avatar",
+      cell: (value, row) => (
+        <img
+          src={value || row.image}
+          alt={row.name}
+          className="w-10 h-10 rounded-full"
+        />
+      ),
     },
     { header: "Email", accessor: "email" },
     { header: "Name", accessor: "name" },
-    { header: "Role", accessor: "role", cell: (value) => <span className="capitalize">{value}</span> },
-    { header: "Status", accessor: "status", cell: (value) => (
+    {
+      header: "Role",
+      accessor: "role",
+      cell: (value) => <span className="capitalize">{value}</span>,
+    },
+    {
+      header: "Status",
+      accessor: "status",
+      cell: (value) => (
         <span
           className={`px-2 py-1 text-xs rounded-full font-medium ${
-            value === "blocked"
-              ? "bg-red-100 text-red-600"
-              : "bg-green-100 text-green-600"
+            value === "blocked" ? "text-red-600" : "text-green-600"
           }`}
         >
           {value}
         </span>
-      )
+      ),
     },
     {
       header: "Actions",
       accessor: "actions",
       cell: (_, row) => (
-        <div className="space-x-2 text-xs text-center">
-          {row.status === "active" ? (
-            <button
-              onClick={() => handleStatusChange(row._id, "blocked")}
-              className="btn btn-xs btn-outline btn-error"
-              disabled={updateStatus.isLoading}
-            >
-              Block
-            </button>
-          ) : (
-            <button
-              onClick={() => handleStatusChange(row._id, "active")}
-              className="btn btn-xs btn-outline btn-success"
-              disabled={updateStatus.isLoading}
-            >
-              Unblock
-            </button>
-          )}
+      <div className="dropdown relative">
+  <div
+    tabIndex={0}
+    role="button"
+    className="btn btn-ghost btn-xs text-gray-600 hover:bg-gray-100"
+  >
+    <Settings2 size={16} />
+  </div>
 
-          {row.role === "donor" && (
-            <button
-              onClick={() => handleRoleChange(row._id, "volunteer")}
-              className="btn btn-xs btn-outline"
-              disabled={updateRole.isLoading}
-            >
-              Make Volunteer
-            </button>
-          )}
+  <ul
+  tabIndex={0}
+  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-56 text-sm 
+             left-1/2 transform -translate-x-1/2 -mt-1"
+>
+    {row.status === "active" ? (
+      <li>
+        <button
+          onClick={() => handleStatusChange(row._id, "blocked")}
+          disabled={updateStatus.isLoading}
+          className="text-red-500 flex gap-2 items-center"
+        >
+          <Ban size={16} /> Block
+        </button>
+      </li>
+    ) : (
+      <li>
+        <button
+          onClick={() => handleStatusChange(row._id, "active")}
+          disabled={updateStatus.isLoading}
+          className="text-green-600 flex gap-2 items-center"
+        >
+          <CheckCircle2 size={16} /> Unblock
+        </button>
+      </li>
+    )}
 
-          {(row.role === "donor" || row.role === "volunteer") && (
-            <button
-              onClick={() => handleRoleChange(row._id, "admin")}
-              className="btn btn-xs btn-outline"
-              disabled={updateRole.isLoading}
-            >
-              Make Admin
-            </button>
-          )}
-        </div>
+    {row.role === "donor" && (
+      <li>
+        <button
+          onClick={() => handleRoleChange(row._id, "volunteer")}
+          disabled={updateRole.isLoading}
+          className="flex gap-2 items-center"
+        >
+          <Handshake size={16} /> Make Volunteer
+        </button>
+      </li>
+    )}
+
+    {(row.role === "donor" || row.role === "volunteer") && (
+      <li>
+        <button
+          onClick={() => handleRoleChange(row._id, "admin")}
+          disabled={updateRole.isLoading}
+          className="flex gap-2 items-center"
+        >
+          <ShieldPlus size={16} /> Make Admin
+        </button>
+      </li>
+    )}
+  </ul>
+</div>
+
       ),
     },
   ];
@@ -143,25 +186,26 @@ const AllUsers = () => {
         emptyMessage="No users found."
       />
 
-     
-      <div className="mt-4 flex items-center justify-center space-x-4">
-        <button
-          onClick={() => setPage((p) => Math.max(p - 1, 1))}
-          disabled={page === 1}
-          className="btn btn-sm"
-        >
-          Previous
-        </button>
-        <span>
-          Page <strong>{page}</strong> of <strong>{totalPages}</strong>
-        </span>
-        <button
-          onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
-          disabled={page === totalPages}
-          className="btn btn-sm"
-        >
-          Next
-        </button>
+      <div className="mt-4 flex items-center justify-center">
+        <div className="join">
+          <button
+            className="join-item btn btn-sm"
+            onClick={() => setPage((p) => Math.max(p - 1, 1))}
+            disabled={page === 1}
+          >
+            «
+          </button>
+          <button className="join-item btn btn-sm cursor-default">
+            Page {page} of {totalPages}
+          </button>
+          <button
+            className="join-item btn btn-sm"
+            onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+            disabled={page === totalPages}
+          >
+            »
+          </button>
+        </div>
       </div>
     </div>
   );

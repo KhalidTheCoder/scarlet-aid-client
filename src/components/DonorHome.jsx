@@ -6,6 +6,7 @@ import Loading from "../pages/Loading";
 import { AuthContext } from "../providers/AuthContext";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Table from "./Table";
+import { Check, Eye, Pencil, Trash2, XCircle } from "lucide-react";
 
 const fetchRecentRequests = async ({ queryKey }) => {
   const [, { email }, axiosSecure] = queryKey;
@@ -21,17 +22,17 @@ const DonorHome = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // Fetch recent 3 requests
   const { data: recentRequests = [], isLoading } = useQuery({
     queryKey: ["recentDonationRequests", { email: user?.email }, axiosSecure],
     queryFn: fetchRecentRequests,
     enabled: !!user?.email,
   });
 
-  // Mutation to update status
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }) => {
-      const res = await axiosSecure.patch(`/donation-requests/${id}`, { status });
+      const res = await axiosSecure.patch(`/donation-requests/${id}`, {
+        status,
+      });
       return res.data;
     },
     onSuccess: () => {
@@ -41,7 +42,6 @@ const DonorHome = () => {
     onError: () => Swal.fire("Error!", "Failed to update status.", "error"),
   });
 
-  // Mutation to delete request
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
       await axiosSecure.delete(`/donation-requests/${id}`);
@@ -53,7 +53,6 @@ const DonorHome = () => {
     onError: () => Swal.fire("Error!", "Failed to delete request.", "error"),
   });
 
-  // Handle delete confirmation
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -70,7 +69,6 @@ const DonorHome = () => {
 
   if (isLoading) return <Loading />;
 
-  // Columns for table
   const columns = [
     { header: "Recipient", accessor: "recipientName" },
     {
@@ -106,45 +104,102 @@ const DonorHome = () => {
     {
       header: "Actions",
       accessor: "actions",
+      // cell: (_, row) => (
+      //   <div className="flex flex-wrap gap-2">
+      //     {row.status === "inprogress" && (
+      //       <>
+      //         <button
+      //           className="btn btn-xs btn-success"
+      //           onClick={() =>
+      //             updateStatusMutation.mutate({ id: row._id, status: "done" })
+      //           }
+      //         >
+      //           Done
+      //         </button>
+      //         <button
+      //           className="btn btn-xs btn-warning"
+      //           onClick={() =>
+      //             updateStatusMutation.mutate({
+      //               id: row._id,
+      //               status: "canceled",
+      //             })
+      //           }
+      //         >
+      //           Cancel
+      //         </button>
+      //       </>
+      //     )}
+      //     <button
+      //       className="btn btn-xs btn-info"
+      //       onClick={() =>
+      //         navigate(`/dashboard/donation-requests/${row._id}/edit`)
+      //       }
+      //     >
+      //       Edit
+      //     </button>
+      //     <button
+      //       className="btn btn-xs btn-error"
+      //       onClick={() => handleDelete(row._id)}
+      //     >
+      //       Delete
+      //     </button>
+      //     <button
+      //       className="btn btn-xs btn-primary"
+      //       onClick={() => navigate(`/dashboard/donation-requests/${row._id}`)}
+      //     >
+      //       View
+      //     </button>
+      //   </div>
+      // ),
       cell: (_, row) => (
         <div className="flex flex-wrap gap-2">
           {row.status === "inprogress" && (
             <>
               <button
                 className="btn btn-xs btn-success"
+                title="Mark as Done"
                 onClick={() =>
                   updateStatusMutation.mutate({ id: row._id, status: "done" })
                 }
               >
-                Done
+                <Check className="w-4 h-4" />
               </button>
               <button
                 className="btn btn-xs btn-warning"
+                title="Cancel Request"
                 onClick={() =>
-                  updateStatusMutation.mutate({ id: row._id, status: "canceled" })
+                  updateStatusMutation.mutate({
+                    id: row._id,
+                    status: "canceled",
+                  })
                 }
               >
-                Cancel
+                <XCircle className="w-4 h-4" />
               </button>
             </>
           )}
           <button
             className="btn btn-xs btn-info"
-            onClick={() => navigate(`/dashboard/donation-requests/${row._id}/edit`)}
+            title="Edit Request"
+            onClick={() =>
+              navigate(`/dashboard/donation-requests/${row._id}/edit`)
+            }
           >
-            Edit
+            <Pencil className="w-4 h-4" />
           </button>
           <button
             className="btn btn-xs btn-error"
+            title="Delete Request"
             onClick={() => handleDelete(row._id)}
           >
-            Delete
+            <Trash2 className="w-4 h-4" />
           </button>
           <button
             className="btn btn-xs btn-primary"
+            title="View Request"
             onClick={() => navigate(`/dashboard/donation-requests/${row._id}`)}
           >
-            View
+            <Eye className="w-4 h-4" />
           </button>
         </div>
       ),
@@ -153,18 +208,21 @@ const DonorHome = () => {
 
   return (
     <div className="p-6">
-      {/* Welcome message */}
       <h1 className="text-2xl font-bold mb-4">
         Welcome, {user?.displayName || "Donor"}!
       </h1>
 
-      {/* Show table only if recent requests exist */}
       {recentRequests.length > 0 && (
         <div>
           <h2 className="text-lg font-semibold mb-2">
             Your Recent Donation Requests
           </h2>
-          <Table columns={columns} data={recentRequests} currentPage={1} limit={3} />
+          <Table
+            columns={columns}
+            data={recentRequests}
+            currentPage={1}
+            limit={3}
+          />
 
           <div className="mt-4 text-center">
             <Link
