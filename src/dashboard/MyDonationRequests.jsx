@@ -7,6 +7,7 @@ import Title from "../components/Title";
 import Loading from "../pages/Loading";
 import Table from "../components/Table";
 import Swal from "sweetalert2";
+import { Check, Eye, Pencil, Trash2, XCircle } from "lucide-react";
 
 const fetchDonationRequests = async ({ queryKey }) => {
   const [, { email, status, page, limit }, axiosSecure] = queryKey;
@@ -29,7 +30,7 @@ const MyDonationRequests = () => {
 
   const [statusFilter, setStatusFilter] = useState("all");
   const [page, setPage] = useState(1);
-  const limit = 5;
+  const limit = 10;
 
   const { data, isLoading, isError } = useQuery({
     queryKey: [
@@ -44,7 +45,7 @@ const MyDonationRequests = () => {
 
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }) =>
-      axiosSecure.patch(`/donation-requests/${id}`, { status }),
+      axiosSecure.patch(`/donation-requests/${id}/status`, { status }),
     onSuccess: () => {
       queryClient.invalidateQueries(["myDonationRequests"]);
       Swal.fire("Updated!", "Donation status updated.", "success");
@@ -53,7 +54,8 @@ const MyDonationRequests = () => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id) => await axiosSecure.delete(`/donation-requests/${id}`),
+    mutationFn: async (id) =>
+      await axiosSecure.delete(`/donation-requests/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries(["myDonationRequests"]);
       Swal.fire("Deleted!", "Request deleted successfully.", "success");
@@ -116,45 +118,56 @@ const MyDonationRequests = () => {
     {
       header: "Actions",
       accessor: "actions",
+
       cell: (_, row) => (
         <div className="flex flex-wrap gap-2">
           {row.status === "inprogress" && (
             <>
               <button
                 className="btn btn-xs btn-success"
+                title="Mark as Done"
                 onClick={() =>
                   updateStatusMutation.mutate({ id: row._id, status: "done" })
                 }
               >
-                Done
+                <Check className="w-4 h-4" />
               </button>
               <button
                 className="btn btn-xs btn-warning"
+                title="Cancel Request"
                 onClick={() =>
-                  updateStatusMutation.mutate({ id: row._id, status: "canceled" })
+                  updateStatusMutation.mutate({
+                    id: row._id,
+                    status: "canceled",
+                  })
                 }
               >
-                Cancel
+                <XCircle className="w-4 h-4" />
               </button>
             </>
           )}
           <button
             className="btn btn-xs btn-info"
-            onClick={() => navigate(`/dashboard/donation-requests/${row._id}/edit`)}
+            title="Edit Request"
+            onClick={() =>
+              navigate(`/dashboard/donation-requests/${row._id}/edit`)
+            }
           >
-            Edit
+            <Pencil className="w-4 h-4" />
           </button>
           <button
             className="btn btn-xs btn-error"
+            title="Delete Request"
             onClick={() => handleDelete(row._id)}
           >
-            Delete
+            <Trash2 className="w-4 h-4" />
           </button>
           <button
             className="btn btn-xs btn-primary"
+            title="View Request"
             onClick={() => navigate(`/dashboard/donation-requests/${row._id}`)}
           >
-            View
+            <Eye className="w-4 h-4" />
           </button>
         </div>
       ),
@@ -167,7 +180,6 @@ const MyDonationRequests = () => {
         <Title>My Donation Requests</Title>
       </div>
 
-      
       <div className="my-5">
         <select
           value={statusFilter}
@@ -185,7 +197,6 @@ const MyDonationRequests = () => {
         </select>
       </div>
 
-      
       <Table
         columns={columns}
         data={requests}
@@ -194,7 +205,6 @@ const MyDonationRequests = () => {
         emptyMessage="No donation requests found."
       />
 
-      
       {totalPages > 1 && (
         <div className="join mt-6 flex justify-center">
           <button

@@ -89,7 +89,7 @@ const EditDonationRequest = () => {
         "Donation request updated successfully.",
         "success"
       );
-      navigate("/dashboard/my-donation-requests");
+      navigate(`/dashboard/donation-requests/${id}`);
     },
     onError: () => {
       Swal.fire("Error!", "Failed to update donation request.", "error");

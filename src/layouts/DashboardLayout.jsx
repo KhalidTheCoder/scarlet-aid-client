@@ -120,6 +120,17 @@ const DashboardLayout = () => {
               >
                 <span className="font-medium">Manage Donations</span>
               </NavLink>
+              <NavLink
+                to="/dashboard/content-management"
+                onClick={() => setIsOpen(false)}
+                className={({ isActive }) =>
+                  `p-2 rounded hover:bg-[#CD5656] ${
+                    isActive ? "bg-[#DA6C6C]" : ""
+                  }`
+                }
+              >
+                <span className="font-medium">Manage Content</span>
+              </NavLink>
               {/* Add more admin-specific links here */}
             </>
           )}
