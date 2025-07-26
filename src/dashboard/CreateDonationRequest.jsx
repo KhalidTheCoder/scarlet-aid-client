@@ -104,9 +104,14 @@ const CreateDonationRequest = () => {
 
   return (
     <div className="py-10 w-full overflow-x-hidden">
+
+      
       <div className="w-full max-w-5xl mx-auto md:px-4">
+        <div className="mt-3 mb-12 flex justify-center">
+        <Title>Account Details & Info</Title>
+      </div>
         <div className="w-full bg-white p-6 md:p-8 shadow rounded-2xl">
-          <Title>Create Donation Request</Title>
+          {/* <Title>Create Donation Request</Title> */}
 
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -261,7 +266,7 @@ const CreateDonationRequest = () => {
               <button
                 type="submit"
                 disabled={isPending}
-                className="btn bg-[#CD5656] text-white"
+                className="bg-[#F09410] hover:bg-[#BC430D] text-white px-4 py-2 rounded-md font-medium transition"
               >
                 {isPending ? "Submitting..." : "Submit Request"}
               </button>

@@ -10,6 +10,8 @@ import {
   ShieldPlus,
   Settings2,
 } from "lucide-react";
+import Title from "../components/Title";
+import Loading from "../pages/Loading";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -69,7 +71,7 @@ const AllUsers = () => {
     updateRole.mutate({ id, role: newRole });
   };
 
-  if (isLoading) return <p>Loading users...</p>;
+  if (isLoading) return <Loading></Loading>;
   if (isError) return <p>Error loading users!</p>;
 
   const columns = [
@@ -176,7 +178,9 @@ const AllUsers = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">All Users</h2>
+      <div className="mt-3 mb-12 flex justify-center">
+              <Title>User Management</Title>
+            </div>
 
       <Table
         columns={columns}

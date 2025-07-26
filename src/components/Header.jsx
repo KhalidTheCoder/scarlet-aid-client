@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { CgMenuMotion } from "react-icons/cg";
 import { RiMenuAddLine } from "react-icons/ri";
 import { Link, NavLink } from "react-router";
@@ -7,122 +7,200 @@ import { AuthContext } from "../providers/AuthContext";
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isPageLoad, setisPageLoad] = useState(false);
-  const menu = [
-    {
-      name: "Home",
-      path: "/",
-    },
-    {
-      name: "Search Donor",
-      path: "/searchDonor",
-    },
-    {
-      name: "Donation Request",
-      path: "/donationRequest",
-    },
-    {
-      name: "Blogs",
-      path: "/blogs",
-    },
+  const [isAvatarOpen, setIsAvatarOpen] = useState(false);
+  const avatarRef = useRef();
 
-    // {
-    //   name: "Dashboard",
-    //   path: "/dashboard",
-    // },
+  // Close avatar dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (avatarRef.current && !avatarRef.current.contains(e.target)) {
+        setIsAvatarOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const menuLinks = [
+    { name: "Home", path: "/" },
+    { name: "Donation Requests", path: "/donationRequest" },
+    { name: "Blog", path: "/blogs" },
+    { name: "Search Donor", path: "/searchDonor" },
   ];
+
+  const linkClasses =
+    "px-3 py-2 text-sm font-medium rounded hover:bg-white/20 transition-colors duration-200 tracking-wide";
+
   return (
-    <nav className="overflow-x-clip font-semibold text-[#FFFFFF]"
-     style={{
-    background: "linear-gradient(to right, #BC430d, #241705)",
-  }}
-    >
-      {/* {user && (
-        <p className="text-center text-white bg-black py-2 bg-opacity-90">
-          Welcome Mr. {user?.displayName} ❤️‍🔥❤️‍🔥. Now You Can Watch All the
-          Recipies🍉🍉
-        </p>
-      )} */}
-      <div className="text-center"></div>
-      <div className="w-11/12 mx-auto py-5 flex justify-between items-center relative">
-        <Link to="/" className="logo">
-          <span className="text-xl font-bold">Auth 🍳 Template</span>
+    <nav className="sticky top-0 z-50 bg-gradient-to-r from-[#BC430d] to-[#241705] text-white shadow-md font-inter">
+      <div className="w-11/12 mx-auto py-4 flex justify-between items-center">
+        {/* Logo */}
+        <Link
+          to="/"
+          className="text-xl font-bold tracking-wide hover:scale-105 transition-transform duration-200"
+        >
+          ScarletAid
         </Link>
 
-        {/* menu-lg start */}
-        <ul className="hidden lg:flex items-center gap-5 ">
-          {menu.map((item) => (
-            <NavLink key={item.path} to={item.path}>
+        {/* Desktop Menu */}
+        <ul className="hidden lg:flex items-center gap-5">
+          {menuLinks.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `${linkClasses} ${isActive ? "bg-white/20" : ""}`
+              }
+            >
               {item.name}
             </NavLink>
           ))}
+
           {user && user?.email ? (
             <>
-              <NavLink to="/dashboard">Dashboard</NavLink>
-              <button className="cursor-pointer" onClick={logOut}>
-                Logout
-              </button>
+              <NavLink
+                to="/fund"
+                className={({ isActive }) =>
+                  `${linkClasses} ${isActive ? "bg-white/20" : ""}`
+                }
+              >
+                Funding
+              </NavLink>
+
+              {/* Avatar with dropdown */}
+              <div className="relative" ref={avatarRef}>
+                <img
+                  src={user.photoURL || "/default-avatar.png"}
+                  alt="User Avatar"
+                  onClick={() => setIsAvatarOpen((prev) => !prev)}
+                  className="w-9 h-9 rounded-full cursor-pointer ring-2 ring-white/40 hover:ring-orange-400 transition duration-200"
+                />
+                <div
+                  className={`absolute right-0 mt-3 w-40 bg-white text-gray-800 rounded-md shadow-lg py-2 transform transition-all duration-200 origin-top-right ${
+                    isAvatarOpen
+                      ? "scale-100 opacity-100"
+                      : "scale-95 opacity-0 pointer-events-none"
+                  }`}
+                >
+                  <NavLink
+                    to="/dashboard"
+                    onClick={() => setIsAvatarOpen(false)}
+                    className="block px-4 py-2 font-medium hover:bg-gray-100 text-sm"
+                  >
+                    Dashboard
+                  </NavLink>
+                  <button
+                    onClick={() => {
+                      logOut();
+                      setIsAvatarOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 font-medium hover:bg-gray-100 text-sm"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
             </>
           ) : (
             <>
-              <NavLink to="/login">Login</NavLink>
-              <NavLink to="/registration">Register</NavLink>
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  `${linkClasses} ${isActive ? "bg-white/20" : ""}`
+                }
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to="/registration"
+                className={({ isActive }) =>
+                  `${linkClasses} ${isActive ? "bg-white/20" : ""}`
+                }
+              >
+                Register
+              </NavLink>
             </>
           )}
         </ul>
 
-        <div className="lg:hidden ">
+        {/* Mobile Menu Button */}
+        <div className="lg:hidden">
           {!isMenuOpen ? (
             <RiMenuAddLine
-              onClick={() => {
-                setIsMenuOpen(true);
-                setisPageLoad(true);
-              }}
+              onClick={() => setIsMenuOpen(true)}
               className="text-2xl cursor-pointer"
-            ></RiMenuAddLine>
+            />
           ) : (
             <CgMenuMotion
               onClick={() => setIsMenuOpen(false)}
               className="text-2xl cursor-pointer"
-            ></CgMenuMotion>
+            />
           )}
-
-          {
-            <ul
-              className={`flex animate__animated bg-white flex-col lg:hidden gap-5 absolute z-50 bg-opacity-70 w-full top-14  left-0 ${
-                isMenuOpen
-                  ? "animate__fadeInRight "
-                  : isPageLoad
-                  ? "animate__fadeOutRight flex "
-                  : "hidden"
-              } `}
-            >
-              {menu.map((item) => (
-                <NavLink
-                  className="border-b-2 hover:border-orange-500 transition duration-200
-                   "
-                  key={item.path}
-                  to={item.path}
-                >
-                  {item.name}
-                </NavLink>
-              ))}
-              {user && user?.email ? (
-                <>
-                  <button className="cursor-pointer" onClick={logOut}>
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <NavLink to="/login">Login</NavLink>
-                  <NavLink to="/registration">Register</NavLink>
-                </>
-              )}
-            </ul>
-          }
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      <ul
+        className={`lg:hidden flex flex-col gap-3 absolute bg-[#1c0f05] text-white font-medium w-full px-6 py-5 transition-all duration-300 text-sm ${
+          isMenuOpen ? "top-16 opacity-100" : "-top-96 opacity-0"
+        }`}
+      >
+        {menuLinks.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            onClick={() => setIsMenuOpen(false)}
+            className="py-2 border-b border-white/20 hover:text-orange-400"
+          >
+            {item.name}
+          </NavLink>
+        ))}
+
+        {user && user?.email ? (
+          <>
+            <NavLink
+              to="/fund"
+              onClick={() => setIsMenuOpen(false)}
+              className="py-2 border-b border-white/20 hover:text-orange-400"
+            >
+              Funding
+            </NavLink>
+            <NavLink
+              to="/dashboard"
+              onClick={() => setIsMenuOpen(false)}
+              className="py-2 border-b border-white/20 hover:text-orange-400"
+            >
+              Dashboard
+            </NavLink>
+            <button
+              onClick={() => {
+                logOut();
+                setIsMenuOpen(false);
+              }}
+              className="py-2 hover:text-orange-400"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <NavLink
+              to="/login"
+              onClick={() => setIsMenuOpen(false)}
+              className="py-2 border-b border-white/20 hover:text-orange-400"
+            >
+              Login
+            </NavLink>
+            <NavLink
+              to="/register"
+              onClick={() => setIsMenuOpen(false)}
+              className="py-2 hover:text-orange-400"
+            >
+              Register
+            </NavLink>
+          </>
+        )}
+      </ul>
     </nav>
   );
 };

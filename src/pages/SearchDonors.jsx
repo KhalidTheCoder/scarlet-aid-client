@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../pages/Loading";
 import useAxios from "../hooks/useAxios";
 import { BiDroplet, BiMap, BiMapAlt } from "react-icons/bi";
+import Title from "../components/Title";
 
 const fetchDistricts = async () => {
   const res = await fetch("/src/assets/districtsAndUpazilas/district.json");
@@ -94,18 +95,21 @@ const SearchDonors = () => {
   if (districtsLoading || upazilasLoading) return <Loading />;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-8">
-      <h1 className="text-3xl font-bold text-center mb-6">Search Donors</h1>
+   <div className="bg-[#FFF4E6] min-h-screen">
+     <div className="max-w-7xl mx-auto p-6 space-y-8">
+      <div className="mt-5 mb-15 flex justify-center">
+        <Title>Search Donors</Title>
+      </div>
 
       <form
         onSubmit={handleSearch}
         className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10"
       >
-        <div className="flex items-center gap-2 border-b-2 border-gray-300 focus-within:border-primary transition-colors">
-          <BiDroplet className="text-3xl text-slate-500" />
+        <div className="flex items-center gap-2 border-b-2 border-gray-600 focus-within:border-[#F09410] transition-colors">
+          <BiDroplet className="text-3xl text-[#241705]" />
           <select
             name="bloodGroup"
-            className="outline-none flex-1 p-2 bg-transparent"
+            className="outline-none flex-1 p-2 bg-transparent text-[#241705]"
             value={filters.bloodGroup}
             onChange={handleInputChange}
             required
@@ -119,11 +123,11 @@ const SearchDonors = () => {
           </select>
         </div>
 
-        <div className="flex items-center gap-2 border-b-2 border-gray-300 focus-within:border-primary transition-colors">
-          <BiMap className="text-3xl text-slate-500" />
+        <div className="flex items-center gap-2 border-b-2 border-gray-600 focus-within:border-[#F09410] transition-colors">
+          <BiMap className="text-3xl text-[#241705]" />
           <select
             name="district"
-            className="outline-none flex-1 p-2 bg-transparent"
+            className="outline-none flex-1 p-2 bg-transparent text-[#241705]"
             value={filters.district}
             onChange={handleInputChange}
           >
@@ -136,11 +140,11 @@ const SearchDonors = () => {
           </select>
         </div>
 
-        <div className="flex items-center gap-2 border-b-2 border-gray-300 focus-within:border-primary transition-colors">
-          <BiMapAlt className="text-3xl text-slate-500" />
+        <div className="flex items-center gap-2 border-b-2 border-gray-600 focus-within:border-[#F09410] transition-colors">
+          <BiMapAlt className="text-3xl text-[#241705]" />
           <select
             name="upazila"
-            className="outline-none flex-1 p-2 bg-transparent"
+            className="outline-none flex-1 p-2 bg-transparent text-[#241705]"
             value={filters.upazila}
             onChange={handleInputChange}
             disabled={!filters.district}
@@ -156,7 +160,7 @@ const SearchDonors = () => {
 
         <button
           type="submit"
-          className="btn btn-primary col-span-1 sm:col-span-3"
+          className="bg-[#F09410] hover:bg-[#BC430D] text-white px-4 py-2 rounded-md font-medium transition col-span-1 sm:col-span-3"
         >
           Search
         </button>
@@ -252,6 +256,7 @@ const SearchDonors = () => {
         </>
       )}
     </div>
+   </div>
   );
 };
 

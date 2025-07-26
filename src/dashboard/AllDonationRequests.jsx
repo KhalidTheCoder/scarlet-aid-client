@@ -7,6 +7,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import useUserRole from "../hooks/useUserRole";
 import Table from "../components/Table";
 import Loading from "../pages/Loading";
+import Title from "../components/Title";
 
 const AllDonationRequests = () => {
   const [statusFilter, setStatusFilter] = useState("");
@@ -152,102 +153,102 @@ const AllDonationRequests = () => {
   //   },
   // ];
 
-
-
   const columns = [
-  { header: "Recipient Name", accessor: "recipientName" },
-  {
-    header: "Location",
-    accessor: "recipientDistrict",
-    cell: (val, row) => `${row.recipientDistrict}, ${row.recipientUpazila}`,
-  },
-  {
-    header: "Date",
-    accessor: "donationDate",
-    cell: (val) => (val ? new Date(val).toLocaleDateString() : "-"),
-  },
-  { header: "Time", accessor: "donationTime" },
-  { header: "Blood Group", accessor: "bloodGroup" },
-  {
-    header: "Status",
-    accessor: "status",
-    cell: (val) => <span className="capitalize">{val}</span>,
-  },
-  {
-    header: "Donor Info",
-    accessor: "donorName",
-    cell: (val, row) =>
-      row.donorName ? (
-        <div>
-          <div className="font-medium">{row.donorName}</div>
-          <div className="text-xs text-gray-500">{row.donorEmail}</div>
-        </div>
-      ) : (
-        <span className="text-sm italic text-gray-400">Not assigned</span>
-      ),
-  },
-  {
-    header: "Actions",
-    accessor: "_id",
-    cell: (id, row) => (
-      <div className="flex flex-wrap gap-2">
-        {row.status === "inprogress" && (
-          <>
-            <button
-              className="btn btn-xs btn-success"
-              title="Mark as Done"
-              onClick={() =>
-                updateStatusMutation.mutate({ id, status: "done" })
-              }
-            >
-              <Check className="w-4 h-4" />
-            </button>
-            <button
-              className="btn btn-xs btn-warning"
-              title="Cancel Request"
-              onClick={() =>
-                updateStatusMutation.mutate({ id, status: "canceled" })
-              }
-            >
-              <XCircle className="w-4 h-4" />
-            </button>
-          </>
-        )}
+    { header: "Recipient Name", accessor: "recipientName" },
+    {
+      header: "Location",
+      accessor: "recipientDistrict",
+      cell: (val, row) => `${row.recipientDistrict}, ${row.recipientUpazila}`,
+    },
+    {
+      header: "Date",
+      accessor: "donationDate",
+      cell: (val) => (val ? new Date(val).toLocaleDateString() : "-"),
+    },
+    { header: "Time", accessor: "donationTime" },
+    { header: "Blood Group", accessor: "bloodGroup" },
+    {
+      header: "Status",
+      accessor: "status",
+      cell: (val) => <span className="capitalize">{val}</span>,
+    },
+    {
+      header: "Donor Info",
+      accessor: "donorName",
+      cell: (val, row) =>
+        row.donorName ? (
+          <div>
+            <div className="font-medium">{row.donorName}</div>
+            <div className="text-xs text-gray-500">{row.donorEmail}</div>
+          </div>
+        ) : (
+          <span className="text-sm italic text-gray-400">Not assigned</span>
+        ),
+    },
+    {
+      header: "Actions",
+      accessor: "_id",
+      cell: (id, row) => (
+        <div className="flex flex-wrap gap-2">
+          {row.status === "inprogress" && (
+            <>
+              <button
+                className="btn border-none btn-xs bg-[#3F7C49] text-white hover:bg-[#34653B]"
+                title="Mark as Done"
+                onClick={() =>
+                  updateStatusMutation.mutate({ id, status: "done" })
+                }
+              >
+                <Check className="w-4 h-4" />
+              </button>
+              <button
+                className="btn border-none btn-xs bg-[#AF3E3E] text-white hover:bg-[#912F2F]"
+                title="Cancel Request"
+                onClick={() =>
+                  updateStatusMutation.mutate({ id, status: "canceled" })
+                }
+              >
+                <XCircle className="w-4 h-4" />
+              </button>
+            </>
+          )}
 
-        {role === "admin" && (
-          <>
-            <button
-              className="btn btn-xs btn-info"
-              title="Edit Request"
-              onClick={() =>
-                navigate(`/dashboard/donation-requests/${id}/edit`)
-              }
-            >
-              <Pencil className="w-4 h-4" />
-            </button>
-            <button
-              className="btn btn-xs btn-error"
-              title="Delete Request"
-              onClick={() => handleDelete(id)}
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
-            <button
-              className="btn btn-xs btn-primary"
-              title="View Request"
-              onClick={() => navigate(`/dashboard/donation-requests/${id}`)}
-            >
-              <Eye className="w-4 h-4" />
-            </button>
-          </>
-        )}
-      </div>
-    ),
-  },
-];
+          {role === "admin" && (
+            <>
+              <button
+                className="btn border-none btn-xs bg-[#5B4B3A] text-white hover:bg-[#4B3C2E]"
+                title="Edit Request"
+                onClick={() =>
+                  navigate(`/dashboard/donation-requests/${id}/edit`)
+                }
+              >
+                <Pencil className="w-4 h-4" />
+              </button>
+              <button
+                className="btn border-none btn-xs bg-[#8A1F1F] text-white hover:bg-[#701818]"
+                title="Delete Request"
+                onClick={() => handleDelete(id)}
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+              <button
+                className="btn border-none btn-xs bg-[#362E24] text-white hover:bg-[#2D241B]"
+                title="View Request"
+                onClick={() => navigate(`/dashboard/donation-requests/${id}`)}
+              >
+                <Eye className="w-4 h-4" />
+              </button>
+            </>
+          )}
+        </div>
+      ),
+    },
+  ];
   return (
     <div className="p-4 space-y-4">
-      <h2 className="text-2xl font-bold">All Blood Donation Requests</h2>
+      <div className="mt-5 mb-15 flex justify-center">
+        <Title>All Blood Donation Requests</Title>
+      </div>
 
       <div>
         <select
@@ -256,7 +257,7 @@ const AllDonationRequests = () => {
             setStatusFilter(e.target.value);
             setCurrentPage(1);
           }}
-          className="select select-bordered w-full sm:max-w-xs"
+          className="w-full sm:max-w-xs px-4 py-2 font-medium bg-white text-[#362E24] text-sm rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#AF3E3E] transition-all duration-200"
         >
           <option value="">All</option>
           <option value="pending">Pending</option>
