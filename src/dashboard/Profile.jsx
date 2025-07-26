@@ -4,6 +4,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import { BiImageAdd } from "react-icons/bi";
 import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthContext";
+import Title from "../components/Title";
 
 const fetchDistricts = async () => {
   const res = await fetch("/src/assets/districtsAndUpazilas/district.json");
@@ -55,7 +56,6 @@ const Profile = () => {
   const { updateUser } = useContext(AuthContext);
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedUpazila, setSelectedUpazila] = useState("");
-
   const [avatarUrl, setAvatarUrl] = useState("");
 
   useEffect(() => {
@@ -141,7 +141,6 @@ const Profile = () => {
 
       updateProfileMutation.mutate(updatedData);
     } catch (error) {
-      console.error("Profile update failed:", error);
       Swal.fire({
         icon: "error",
         title: "Update Failed",
@@ -151,169 +150,185 @@ const Profile = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto bg-white rounded-xl shadow p-6 my-30">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-[#AF3E3E]">My Profile</h2>
-        <button
-          onClick={async () => {
-            if (isEditing) {
-              const { data: freshUser } = await refetch();
-              setSelectedDistrict(freshUser.district || "");
-              setSelectedUpazila(freshUser.upazila || "");
-              setAvatarUrl(freshUser.avatar || "");
-            }
-            setIsEditing(!isEditing);
-          }}
-          className="bg-[#DA6C6C] hover:bg-[#CD5656] font-medium text-white px-4 py-1 rounded transition"
-        >
-          {isEditing ? "Cancel" : "Edit"}
-        </button>
+    <div>
+      <div className="mt-5 mb-15 flex justify-center">
+        <Title>Account Details & Info</Title>
       </div>
-
-      <form onSubmit={handleSubmit} className="space-y-4 font-medium">
-        <div className="flex items-center justify-center gap-2">
-          <img
-            src={avatarUrl || user.avatar}
-            alt="avatar"
-            className="w-24 h-24 rounded-full border object-cover"
-          />
-          {isEditing && (
-            <label className="mt-3 flex flex-col items-center cursor-pointer">
-              <BiImageAdd className="text-3xl text-slate-500 mb-1" />
-              <span className="text-sm font-medium text-gray-500">
-                Choose Photo
-              </span>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-              />
-            </label>
-          )}
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-600">
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            defaultValue={user.name}
-            disabled={!isEditing}
-            className={`w-full p-2 outline-none border-0 text-black border-b-2 transition-all duration-200 focus:border-b-2 focus:border-[#AF3E3E] ${
-              isEditing ? "bg-white" : "bg-gray-100"
-            }`}
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-600">
-            Email
-          </label>
-          <input
-            type="email"
-            value={user.email}
-            disabled
-            className="border-b-2 w-full p-2 text-black bg-gray-100"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-600">
-            District
-          </label>
-          {isEditing ? (
-            <select
-              name="district"
-              value={selectedDistrict}
-              onChange={(e) => setSelectedDistrict(e.target.value)}
-              required
-              className="w-full p-2 outline-none border-0 border-b-2 text-black bg-white transition-all duration-200 focus:border-[#AF3E3E]"
-            >
-              <option value="">Select District</option>
-              {districts.map((d) => (
-                <option key={d.id} value={d.name}>
-                  {d.name}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <input
-              type="text"
-              value={user.district}
-              disabled
-              className="w-full p-2 outline-none border-0 border-b-2 text-black bg-gray-100"
-            />
-          )}
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-600">
-            Upazila
-          </label>
-          {isEditing ? (
-            <select
-              name="upazila"
-              value={selectedUpazila}
-              onChange={(e) => setSelectedUpazila(e.target.value)}
-              required
-              className="w-full p-2 outline-none border-0 border-b-2 text-black bg-white transition-all duration-200 focus:border-[#AF3E3E]"
-            >
-              <option value="">Select Upazila</option>
-              {filteredUpazilas.map((u) => (
-                <option key={u.id} value={u.name}>
-                  {u.name}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <input
-              type="text"
-              value={user.upazila}
-              disabled
-              className="w-full p-2 outline-none border-0 border-b-2 text-black bg-gray-100"
-            />
-          )}
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-600">
-            Blood Group
-          </label>
-          {isEditing ? (
-            <select
-              name="bloodGroup"
-              defaultValue={user.bloodGroup}
-              required
-              className="w-full p-2 outline-none border-0 border-b-2 text-black bg-white transition-all duration-200 focus:border-[#AF3E3E]"
-            >
-              {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((bg) => (
-                <option key={bg} value={bg}>
-                  {bg}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <input
-              type="text"
-              value={user.bloodGroup}
-              disabled
-              className="w-full p-2 outline-none border-0 border-b-2 text-black bg-gray-100"
-            />
-          )}
-        </div>
-
-        {isEditing && (
+      <div className="max-w-3xl mx-auto font-medium bg-white shadow-lg rounded-2xl p-8">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-[#241705]">My Profile</h2>
           <button
-            type="submit"
-            className="w-full bg-[#AF3E3E] hover:bg-[#CD5656] font-medium text-white py-2 rounded"
+            onClick={async () => {
+              if (isEditing) {
+                const { data: freshUser } = await refetch();
+                setSelectedDistrict(freshUser.district || "");
+                setSelectedUpazila(freshUser.upazila || "");
+                setAvatarUrl(freshUser.avatar || "");
+              }
+              setIsEditing(!isEditing);
+            }}
+            className="bg-[#F09410] hover:bg-[#BC430D] text-white px-4 py-2 rounded-md text-sm font-medium transition"
           >
-            Save
+            {isEditing ? "Cancel" : "Edit"}
           </button>
-        )}
-      </form>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="flex items-center gap-4">
+            <img
+              src={avatarUrl || user.avatar}
+              alt="avatar"
+              className="w-24 h-24 rounded-full border border-[#F09410] object-cover"
+            />
+            {isEditing && (
+              <label className="cursor-pointer flex flex-col items-center">
+                <BiImageAdd className="text-3xl text-[#F09410]" />
+                <span className="text-xs text-[#241705]">Upload</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+              </label>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Name */}
+            <div>
+              <label className="text-sm font-semibold text-[#241705]">
+                Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                defaultValue={user.name}
+                disabled={!isEditing}
+                className={`w-full mt-1 p-2 text-sm border-b-2 transition-all focus:outline-none ${
+                  isEditing
+                    ? "bg-white border-[#F09410]"
+                    : "bg-[#FFF4E6] border-transparent"
+                }`}
+              />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="text-sm font-semibold text-[#241705]">
+                Email
+              </label>
+              <input
+                type="email"
+                value={user.email}
+                disabled
+                className="w-full mt-1 p-2 text-sm bg-[#FFF4E6] border-b-2 border-transparent"
+              />
+            </div>
+
+            {/* District */}
+            <div>
+              <label className="text-sm font-semibold text-[#241705]">
+                District
+              </label>
+              {isEditing ? (
+                <select
+                  name="district"
+                  value={selectedDistrict}
+                  onChange={(e) => setSelectedDistrict(e.target.value)}
+                  required
+                  className="w-full mt-1 p-2 text-sm border-b-2 bg-white focus:outline-none focus:border-[#F09410]"
+                >
+                  <option value="">Select District</option>
+                  {districts.map((d) => (
+                    <option key={d.id} value={d.name}>
+                      {d.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  value={user.district}
+                  disabled
+                  className="w-full mt-1 p-2 text-sm bg-[#FFF4E6] border-b-2 border-transparent"
+                />
+              )}
+            </div>
+
+            {/* Upazila */}
+            <div>
+              <label className="text-sm font-semibold text-[#241705]">
+                Upazila
+              </label>
+              {isEditing ? (
+                <select
+                  name="upazila"
+                  value={selectedUpazila}
+                  onChange={(e) => setSelectedUpazila(e.target.value)}
+                  required
+                  className="w-full mt-1 p-2 text-sm border-b-2 bg-white focus:outline-none focus:border-[#F09410]"
+                >
+                  <option value="">Select Upazila</option>
+                  {filteredUpazilas.map((u) => (
+                    <option key={u.id} value={u.name}>
+                      {u.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  value={user.upazila}
+                  disabled
+                  className="w-full mt-1 p-2 text-sm bg-[#FFF4E6] border-b-2 border-transparent"
+                />
+              )}
+            </div>
+
+            {/* Blood Group */}
+            <div>
+              <label className="text-sm font-semibold text-[#241705]">
+                Blood Group
+              </label>
+              {isEditing ? (
+                <select
+                  name="bloodGroup"
+                  defaultValue={user.bloodGroup}
+                  required
+                  className="w-full mt-1 p-2 text-sm border-b-2 bg-white focus:outline-none focus:border-[#F09410]"
+                >
+                  {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(
+                    (bg) => (
+                      <option key={bg} value={bg}>
+                        {bg}
+                      </option>
+                    )
+                  )}
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  value={user.bloodGroup}
+                  disabled
+                  className="w-full mt-1 p-2 text-sm bg-[#FFF4E6] border-b-2 border-transparent"
+                />
+              )}
+            </div>
+          </div>
+
+          {isEditing && (
+            <div className="pt-4">
+              <button
+                type="submit"
+                className="w-full bg-[#F09410] hover:bg-[#BC430D] text-white py-2 rounded-md font-medium transition"
+              >
+                Save Profile
+              </button>
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

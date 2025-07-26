@@ -176,7 +176,7 @@ const MyDonationRequests = () => {
 
   return (
     <div>
-      <div className="mb-20">
+      <div className="mt-5 mb-15 flex justify-center">
         <Title>My Donation Requests</Title>
       </div>
 
@@ -187,7 +187,7 @@ const MyDonationRequests = () => {
             setStatusFilter(e.target.value);
             setPage(1);
           }}
-          className="select select-bordered font-medium w-full max-w-xs"
+          className="w-full sm:max-w-xs px-4 py-2 font-medium bg-white text-[#362E24] text-sm rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#AF3E3E] transition-all duration-200"
         >
           <option value="all">All</option>
           <option value="pending">Pending</option>

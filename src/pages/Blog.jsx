@@ -40,7 +40,7 @@ const Blog = () => {
         <div
           key={blog._id}
           className="card bg-base-100 shadow-md hover:shadow-xl transition cursor-pointer"
-          onClick={() => navigate(`/blogs/${blog._id}`)}
+          onClick={() => navigate(`/blog-details/${blog._id}`)}
         >
           <figure className="h-48 overflow-hidden">
             <img

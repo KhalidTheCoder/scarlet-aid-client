@@ -20,6 +20,7 @@ import SearchDonors from "../pages/SearchDonors";
 import DonationRequests from "../pages/DonationRequests";
 import Blog from "../pages/Blog";
 import BlogDetails from "../pages/BlogDetails";
+import Funding from "../pages/Funding";
 
 const mainRoutes = createBrowserRouter([
   {
@@ -45,15 +46,23 @@ const mainRoutes = createBrowserRouter([
       },
       {
         path: "donationRequest",
-        element: <DonationRequests></DonationRequests>
+        element: <DonationRequests></DonationRequests>,
       },
       {
         path: "blogs",
-        element: <Blog></Blog>
+        element: <Blog></Blog>,
       },
       {
         path: "blog-details/:id",
-        element: <BlogDetails></BlogDetails>
+        element: <BlogDetails></BlogDetails>,
+      },
+      {
+        path: "fund",
+        element: (
+          <PrivateRoute>
+            <Funding></Funding>
+          </PrivateRoute>
+        ),
       },
     ],
   },

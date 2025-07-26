@@ -83,7 +83,7 @@ const ContentManagement = () => {
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="select select-bordered"
+          className="w-full sm:max-w-xs px-4 py-2 font-medium bg-white text-[#362E24] text-sm rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#AF3E3E] transition-all duration-200"
         >
           <option value="all">All</option>
           <option value="draft">Draft</option>

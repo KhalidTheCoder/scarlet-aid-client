@@ -5,7 +5,7 @@ import { FiMenu, FiX } from "react-icons/fi";
 import useUserRole from "../hooks/useUserRole";
 
 const DashboardLayout = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const { role, roleLoading } = useUserRole();
 
@@ -21,23 +21,24 @@ const DashboardLayout = () => {
       />
 
       <div
-        className={`fixed md:static top-0 left-0 min-h-screen w-64 bg-[#AF3E3E] text-white shadow-lg transform ${
+        className={`fixed md:static top-0 left-0 min-h-screen w-64 bg-[#BC430D] text-white shadow-lg transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 transition-transform duration-200 flex flex-col z-50`}
       >
         <div className="p-5 font-bold text-xl border-b border-[#CD5656]">
-          <Link to="/">
-           Scarlet Aid
-          </Link>
+          <Link to="/">Scarlet Aid</Link>
         </div>
         <nav className="flex flex-col p-4 space-y-2">
-          {/* Always visible links */}
           <NavLink
             to="/dashboard"
             end
             onClick={() => setIsOpen(false)}
             className={({ isActive }) =>
-              `p-2 rounded hover:bg-[#CD5656] ${isActive ? "bg-[#DA6C6C]" : ""}`
+              `p-2 rounded transition-colors duration-200 ${
+                isActive
+                  ? "bg-[#241705] text-white"
+                  : "text-white hover:bg-[#F09410]"
+              }`
             }
           >
             <span className="font-medium">Home</span>
@@ -46,21 +47,26 @@ const DashboardLayout = () => {
             to="/dashboard/profile"
             onClick={() => setIsOpen(false)}
             className={({ isActive }) =>
-              `p-2 rounded hover:bg-[#CD5656] ${isActive ? "bg-[#DA6C6C]" : ""}`
+              `p-2 rounded transition-colors duration-200 ${
+                isActive
+                  ? "bg-[#241705] text-white"
+                  : "text-white hover:bg-[#F09410]"
+              }`
             }
           >
             <span className="font-medium">My Profile</span>
           </NavLink>
 
-          {/* Wait for role to load */}
           {!roleLoading && role === "donor" && (
             <>
               <NavLink
                 to="/dashboard/my-donation-requests"
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
-                  `p-2 rounded hover:bg-[#CD5656] ${
-                    isActive ? "bg-[#DA6C6C]" : ""
+                  `p-2 rounded transition-colors duration-200 ${
+                    isActive
+                      ? "bg-[#241705] text-white"
+                      : "text-white hover:bg-[#F09410]"
                   }`
                 }
               >
@@ -70,14 +76,15 @@ const DashboardLayout = () => {
                 to="/dashboard/create-donation-requests"
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
-                  `p-2 rounded hover:bg-[#CD5656] ${
-                    isActive ? "bg-[#DA6C6C]" : ""
+                  `p-2 rounded transition-colors duration-200 ${
+                    isActive
+                      ? "bg-[#241705] text-white"
+                      : "text-white hover:bg-[#F09410]"
                   }`
                 }
               >
                 <span className="font-medium">Create Donation Requests</span>
               </NavLink>
-              {/* Add more donor-specific links here if needed */}
             </>
           )}
 
@@ -87,8 +94,10 @@ const DashboardLayout = () => {
                 to="/dashboard/manage-donations"
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
-                  `p-2 rounded hover:bg-[#CD5656] ${
-                    isActive ? "bg-[#DA6C6C]" : ""
+                  `p-2 rounded transition-colors duration-200 ${
+                    isActive
+                      ? "bg-[#241705] text-white"
+                      : "text-white hover:bg-[#F09410]"
                   }`
                 }
               >
@@ -98,14 +107,15 @@ const DashboardLayout = () => {
                 to="/dashboard/content-management"
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
-                  `p-2 rounded hover:bg-[#CD5656] ${
-                    isActive ? "bg-[#DA6C6C]" : ""
+                  `p-2 rounded transition-colors duration-200 ${
+                    isActive
+                      ? "bg-[#241705] text-white"
+                      : "text-white hover:bg-[#F09410]"
                   }`
                 }
               >
                 <span className="font-medium">Manage Content</span>
               </NavLink>
-              {/* Add more volunteer-specific links here */}
             </>
           )}
 
@@ -115,8 +125,10 @@ const DashboardLayout = () => {
                 to="/dashboard/manage-users"
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
-                  `p-2 rounded hover:bg-[#CD5656] ${
-                    isActive ? "bg-[#DA6C6C]" : ""
+                  `p-2 rounded transition-colors duration-200 ${
+                    isActive
+                      ? "bg-[#241705] text-white"
+                      : "text-white hover:bg-[#F09410]"
                   }`
                 }
               >
@@ -126,8 +138,10 @@ const DashboardLayout = () => {
                 to="/dashboard/manage-donations"
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
-                  `p-2 rounded hover:bg-[#CD5656] ${
-                    isActive ? "bg-[#DA6C6C]" : ""
+                  `p-2 rounded transition-colors duration-200 ${
+                    isActive
+                      ? "bg-[#241705] text-white"
+                      : "text-white hover:bg-[#F09410]"
                   }`
                 }
               >
@@ -137,27 +151,24 @@ const DashboardLayout = () => {
                 to="/dashboard/content-management"
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
-                  `p-2 rounded hover:bg-[#CD5656] ${
-                    isActive ? "bg-[#DA6C6C]" : ""
+                  `p-2 rounded transition-colors duration-200 ${
+                    isActive
+                      ? "bg-[#241705] text-white"
+                      : "text-white hover:bg-[#F09410]"
                   }`
                 }
               >
                 <span className="font-medium">Manage Content</span>
               </NavLink>
-              {/* Add more admin-specific links here */}
             </>
           )}
         </nav>
         <div className="p-4 mt-auto">
-          <button
-            onClick={() => {
-              logOut();
-              setIsOpen(false);
-            }}
-            className="w-full bg-[#DA6C6C] hover:bg-[#CD5656] text-white font-medium p-2 rounded"
-          >
-            Logout
-          </button>
+          <Link to="/">
+            <button className="w-full bg-[#F09410] hover:bg-[#BC430D] text-white font-medium p-2 rounded transition-colors duration-200 shadow-md">
+              Exit Dashboard
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -174,7 +185,7 @@ const DashboardLayout = () => {
           />
         </div>
 
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-6 bg-[#FFF4E6]">
           <Outlet />
         </main>
       </div>
