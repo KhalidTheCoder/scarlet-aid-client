@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet } from "react-router";
 import { AuthContext } from "../providers/AuthContext";
 import { FiMenu, FiX } from "react-icons/fi";
 import useUserRole from "../hooks/useUserRole";
+import logoImg from "../assets/logo.JPG";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
@@ -26,7 +27,12 @@ const DashboardLayout = () => {
         } md:translate-x-0 transition-transform duration-200 flex flex-col z-50`}
       >
         <div className="p-5 font-bold text-xl border-b border-[#CD5656]">
-          <Link to="/">Scarlet Aid</Link>
+          <Link to="/" className="flex items-center gap-2">
+            <img className="w-12 rounded-3xl" src={logoImg} alt="" />
+            <h1 className="text-xl font-bold tracking-wide hover:scale-105 transition-transform duration-200">
+              ScarletAid
+            </h1>
+          </Link>
         </div>
         <nav className="flex flex-col p-4 space-y-2">
           <NavLink
