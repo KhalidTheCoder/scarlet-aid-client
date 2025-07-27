@@ -17,6 +17,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../hooks/useAxios";
+import loadingAnimation from "../assets/loading.json";
 
 const fetchDistricts = async () => {
   const res = await fetch("/src/assets/districtsAndUpazilas/district.json");
@@ -135,7 +136,7 @@ const Register = () => {
         text: "Your account has been successfully created.",
         icon: "success",
         confirmButtonText: "Continue",
-        confirmButtonColor: "#F09410"
+        confirmButtonColor: "#F09410",
       });
       navigate(`${location.state ? location.state : "/"}`);
     } catch (error) {
@@ -286,9 +287,19 @@ const Register = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-2 py-2 sm:py-3 bg-[#F09410] hover:bg-[#BC430D] text-white text-base sm:text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-300 disabled:opacity-50"
+                className="mt-2 py-2 sm:py-3 bg-[#F09410] hover:bg-[#BC430D] text-white text-base sm:text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-300 disabled:opacity-70 flex items-center justify-center"
               >
-                {loading ? "Registering..." : "Register Now"}
+                {loading ? (
+                  <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <Lottie
+                      animationData={loadingAnimation}
+                      loop
+                      style={{ width: 52, height: 52 }}
+                    />
+                  </div>
+                ) : (
+                  "Register Now"
+                )}
               </button>
 
               <p className="text-center text-sm sm:text-base text-gray-700 mt-3">
