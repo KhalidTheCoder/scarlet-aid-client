@@ -130,7 +130,13 @@ const Register = () => {
         status: "active",
       });
 
-      Swal.fire("Success!", "Registration successful", "success");
+      Swal.fire({
+        title: "Registration Completed",
+        text: "Your account has been successfully created.",
+        icon: "success",
+        confirmButtonText: "Continue",
+        confirmButtonColor: "#F09410"
+      });
       navigate(`${location.state ? location.state : "/"}`);
     } catch (error) {
       console.error(error);

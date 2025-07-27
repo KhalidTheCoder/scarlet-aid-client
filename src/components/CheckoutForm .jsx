@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import useAxiosSecure from "../hooks/useAxiosSecure";
-
+import Lottie from "lottie-react";
+import loadingAnimation from "../assets/loading.json";
 
 const CheckoutForm = ({ amount, onSuccess }) => {
   const stripe = useStripe();
@@ -19,13 +20,11 @@ const CheckoutForm = ({ amount, onSuccess }) => {
     setError(null);
 
     try {
-      // 1. Create a PaymentIntent on the backend
       const { data } = await axiosSecure.post("/create-payment-intent", {
-        amount: amount * 100, // convert to cents
+        amount: amount * 100,
       });
       const { clientSecret } = data;
 
-      // 2. Confirm payment on the client
       const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
@@ -35,14 +34,12 @@ const CheckoutForm = ({ amount, onSuccess }) => {
       if (result.error) {
         setError(result.error.message);
       } else if (result.paymentIntent.status === "succeeded") {
-        // 3. Save funding record in your backend
         await axiosSecure.post("/funding", { amount });
 
-        // 4. Trigger success callback
         onSuccess?.(result.paymentIntent);
       }
     } catch (err) {
-        console.error("Payment error:", err);
+      console.error("Payment error:", err);
       setError("Payment failed. Please try again.");
     }
 
@@ -61,9 +58,17 @@ const CheckoutForm = ({ amount, onSuccess }) => {
       <button
         type="submit"
         disabled={!stripe || loading}
-        className="btn btn-primary w-full"
+        className="btn bg-[#F09410] hover:bg-[#BC430D] text-white px-4 py-2 rounded-md font-medium transition w-full"
       >
-        {loading ? "Processing..." : `Pay $${amount}`}
+        {loading ? (
+          <Lottie
+            animationData={loadingAnimation}
+            loop={true}
+            style={{ width: 52, height: 52 }}
+          />
+        ) : (
+          `Pay $${amount}`
+        )}
       </button>
     </form>
   );
