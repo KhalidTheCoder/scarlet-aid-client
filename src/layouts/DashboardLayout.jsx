@@ -57,36 +57,33 @@ const DashboardLayout = () => {
             <span className="font-medium">My Profile</span>
           </NavLink>
 
-          {!roleLoading && role === "donor" && (
-            <>
-              <NavLink
-                to="/dashboard/my-donation-requests"
-                onClick={() => setIsOpen(false)}
-                className={({ isActive }) =>
-                  `p-2 rounded transition-colors duration-200 ${
-                    isActive
-                      ? "bg-[#241705] text-white"
-                      : "text-white hover:bg-[#F09410]"
-                  }`
-                }
-              >
-                <span className="font-medium">My Donation Requests</span>
-              </NavLink>
-              <NavLink
-                to="/dashboard/create-donation-requests"
-                onClick={() => setIsOpen(false)}
-                className={({ isActive }) =>
-                  `p-2 rounded transition-colors duration-200 ${
-                    isActive
-                      ? "bg-[#241705] text-white"
-                      : "text-white hover:bg-[#F09410]"
-                  }`
-                }
-              >
-                <span className="font-medium">Create Donation Requests</span>
-              </NavLink>
-            </>
-          )}
+          <NavLink
+            to="/dashboard/my-donation-requests"
+            onClick={() => setIsOpen(false)}
+            className={({ isActive }) =>
+              `p-2 rounded transition-colors duration-200 ${
+                isActive
+                  ? "bg-[#241705] text-white"
+                  : "text-white hover:bg-[#F09410]"
+              }`
+            }
+          >
+            <span className="font-medium">My Donation Requests</span>
+          </NavLink>
+
+          <NavLink
+            to="/dashboard/create-donation-requests"
+            onClick={() => setIsOpen(false)}
+            className={({ isActive }) =>
+              `p-2 rounded transition-colors duration-200 ${
+                isActive
+                  ? "bg-[#241705] text-white"
+                  : "text-white hover:bg-[#F09410]"
+              }`
+            }
+          >
+            <span className="font-medium">Create Donation Requests</span>
+          </NavLink>
 
           {!roleLoading && role === "volunteer" && (
             <>

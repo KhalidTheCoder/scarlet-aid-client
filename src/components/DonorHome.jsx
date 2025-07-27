@@ -8,6 +8,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import Table from "./Table";
 import { Check, Eye, Pencil, Trash2, XCircle } from "lucide-react";
 import Title from "./Title";
+import WelcomeSection from "./WelcomeSection";
 
 const fetchRecentRequests = async ({ queryKey }) => {
   const [, { email }, axiosSecure] = queryKey;
@@ -163,8 +164,10 @@ const DonorHome = () => {
   return (
     <div className="p-6">
       <div className="pt-3 mb-12 flex justify-center">
-        <Title>Welcome, {user?.displayName || "Donor"}!</Title>
+        <Title>Stay Connected, Stay Inspired</Title>
       </div>
+
+      <WelcomeSection></WelcomeSection>
 
       {recentRequests.length > 0 && (
         <div>
