@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useUserRole from "../hooks/useUserRole";
 import Loading from "../pages/Loading";
+import Title from "../components/Title";
 
 const fetchBlogs = async ({ queryKey }) => {
   const [, filter, axiosSecure] = queryKey;
@@ -68,11 +69,11 @@ const ContentManagement = () => {
 
   return (
     <div className="px-4 py-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 mx-auto">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Content Management</h1>
+      <div className="flex justify-between items-center mb-10">
+        <Title>Content Administration</Title>
         <button
           onClick={() => navigate("/dashboard/add-blog")}
-          className="btn bg-[#CD5656] text-white"
+          className="bg-[#F09410] hover:bg-[#BC430D] text-white px-4 py-2 rounded-md font-medium transition"
         >
           Add Blog
         </button>
@@ -95,61 +96,71 @@ const ContentManagement = () => {
         <p className="text-gray-500">No blogs found.</p>
       ) : (
         <div className="grid gap-8 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
-         {blogs.map((blog) => (
-  <div
-    key={blog._id}
-    className="card bg-base-100 w-full sm:w-96 shadow-sm"
-  >
-    <figure>
-      <img
-        src={blog.thumbnail}
-        alt={blog.title}
-        className="object-cover w-full h-48"
-      />
-    </figure>
-    <div className="card-body">
-      <h2 className="card-title">
-        {blog.title}
-        {blog.status === "published" && (
-          <div className="badge badge-secondary">PUBLISHED</div>
-        )}
-        {blog.status === "draft" && (
-          <div className="badge badge-outline">DRAFT</div>
-        )}
-      </h2>
-  <p className="text-gray-700">
-  {blog.content.replace(/<[^>]+>/g, "")}
-</p>
-      <div className="card-actions justify-end flex flex-wrap gap-2 mt-2">
-        {role === "admin" && blog.status === "draft" && (
-          <button
-            onClick={() => publishMutation.mutate(blog._id)}
-            className="btn btn-xs btn-success"
-          >
-            Publish
-          </button>
-        )}
-        {role === "admin" && blog.status === "published" && (
-          <button
-            onClick={() => unpublishMutation.mutate(blog._id)}
-            className="btn btn-xs btn-warning"
-          >
-            Unpublish
-          </button>
-        )}
-        {role === "admin" && (
-          <button
-            onClick={() => handleDelete(blog._id)}
-            className="btn btn-xs btn-error"
-          >
-            Delete
-          </button>
-        )}
+  {blogs.map((blog) => (
+    <div
+      key={blog._id}
+      className="bg-[#FDD0C7] rounded-2xl shadow-md w-full sm:w-96 transition-transform duration-200 hover:scale-[1.02]"
+    >
+      <figure className="rounded-t-2xl overflow-hidden">
+        <img
+          src={blog.thumbnail}
+          alt={blog.title}
+          className="object-cover w-full h-48"
+        />
+      </figure>
+
+      <div className="p-4">
+        <h2 className="text-lg font-semibold text-[#241705] flex items-center justify-between">
+          {blog.title}
+          {blog.status === "published" && (
+            <span className="text-xs px-2 py-0.5 rounded-full bg-[#F09410] text-white">
+              PUBLISHED
+            </span>
+          )}
+          {blog.status === "draft" && (
+            <span className="text-xs px-2 py-0.5 rounded-full border border-[#F09410] text-[#F09410]">
+              DRAFT
+            </span>
+          )}
+        </h2>
+
+        <p className="mt-2 text-sm text-[#241705] line-clamp-3">
+          {blog.content.replace(/<[^>]+>/g, "")}
+        </p>
+
+        <div className="mt-4 flex flex-wrap justify-end gap-2">
+          {role === "admin" && blog.status === "draft" && (
+            <button
+              onClick={() => publishMutation.mutate(blog._id)}
+              className="px-3 py-1 text-xs rounded-full bg-[#F09410] hover:bg-[#BC430D] text-white transition"
+            >
+              Publish
+            </button>
+          )}
+
+          {role === "admin" && blog.status === "published" && (
+            <button
+              onClick={() => unpublishMutation.mutate(blog._id)}
+              className="px-3 py-1 text-xs rounded-full bg-[#FFF4E6] hover:bg-[#F09410] text-[#241705] border border-[#F09410] transition"
+            >
+              Unpublish
+            </button>
+          )}
+
+          {role === "admin" && (
+            <button
+              onClick={() => handleDelete(blog._id)}
+              className="px-3 py-1 text-xs rounded-full bg-red-500 hover:bg-red-600 text-white transition"
+            >
+              Delete
+            </button>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-))}
-        </div>
+  ))}
+</div>
+
       )}
     </div>
   );

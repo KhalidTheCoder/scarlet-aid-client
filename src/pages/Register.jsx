@@ -9,8 +9,8 @@ import {
   BiMap,
   BiMapAlt,
 } from "react-icons/bi";
-import { useNavigate } from "react-router";
-import happy from "../assets/happy.json";
+import { Link, useLocation, useNavigate } from "react-router";
+import happy from "../assets/Register.json";
 import Title from "../components/Title";
 import { AuthContext } from "../providers/AuthContext";
 import axios from "axios";
@@ -40,6 +40,7 @@ const fetchUpazilas = async () => {
 
 const Register = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { createUser, setUser, updateUser } = useContext(AuthContext);
   const axiosPublic = useAxios();
 
@@ -75,7 +76,22 @@ const Register = () => {
     const imageFile = form.image.files[0];
 
     if (password !== confirmPass) {
-      Swal.fire("Error!", "Passwords do not match", "error");
+      Swal.fire({
+        icon: "warning",
+        title: "Password Mismatch",
+        text: "Please make sure both password fields match before continuing.",
+      });
+      setLoading(false);
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      Swal.fire(
+        "Weak Password!",
+        "Password must be at least 6 characters long, contain at least one uppercase letter and one number.",
+        "error"
+      );
       setLoading(false);
       return;
     }
@@ -115,7 +131,7 @@ const Register = () => {
       });
 
       Swal.fire("Success!", "Registration successful", "success");
-      navigate("/");
+      navigate(`${location.state ? location.state : "/"}`);
     } catch (error) {
       console.error(error);
       Swal.fire(
@@ -129,55 +145,62 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-[#EAEBD0] bg-contain">
-      <div className="bg-[#EAEBD0] bg-opacity-90 min-h-screen">
-        <div className="w-11/12 mx-auto py-10">
-          <Title>Join with Us</Title>
+    <div className="bg-[#FFF4E6]">
+      <div className="bg-[#FFF4E6] min-h-screen">
+        <div className="max-w-5xl mx-auto py-8 md:py-12">
+          <div className="mb-5 flex justify-center">
+            <Title>Join with Us!</Title>
+          </div>
 
-          <div className="flex justify-between items-center gap-5 pt-8 flex-col md:flex-row">
+          <div className="flex flex-col md:flex-row items-center gap-8 pt-8 md:pt-12">
+            {/* Registration Form */}
+
             <form
               onSubmit={handleSubmit}
-              className="bg-white p-5 flex flex-col gap-6 backdrop-blur-sm bg-opacity-10 shadow-lg rounded-lg flex-1"
+              className="bg-white/80 backdrop-blur-md p-6 sm:p-8 flex flex-col gap-5 shadow-lg rounded-xl w-full md:flex-1"
             >
-              <div className="flex items-center gap-2">
-                <BiUser className="text-3xl text-slate-500" />
-                <input
-                  className="outline-none flex-1 border-b-2 p-2 bg-transparent focus:border-[#AF3E3E]"
-                  type="text"
-                  name="name"
-                  placeholder="Enter Full Name"
-                  required
-                />
-              </div>
+              <h2 className="mb-3 text-3xl font-semibold text-center text-[#F09410]">
+                Register your account
+              </h2>
+              {[
+                {
+                  icon: BiUser,
+                  type: "text",
+                  name: "name",
+                  placeholder: "Full Name",
+                },
+                {
+                  icon: BiImageAdd,
+                  type: "file",
+                  name: "image",
+                  accept: "image/*",
+                },
+                {
+                  icon: BiEnvelope,
+                  type: "email",
+                  name: "email",
+                  placeholder: "Email Address",
+                },
+              ].map(({ icon: Icon, ...rest }, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 bg-[#FDD0C7]/30 px-3 py-2 rounded-lg"
+                >
+                  <Icon className="text-xl text-[#F09410]" />
+                  <input
+                    {...rest}
+                    required
+                    className="flex-1 bg-transparent outline-none border-b-2 border-transparent focus:border-[#F09410] px-2 py-1 text-[#241705] placeholder-gray-500 text-sm sm:text-base"
+                  />
+                </div>
+              ))}
 
-              <div className="flex items-center gap-2">
-                <BiImageAdd className="text-3xl text-slate-500" />
-                <input
-                  className="flex-1"
-                  type="file"
-                  name="image"
-                  accept="image/*"
-                  required
-                />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <BiEnvelope className="text-3xl text-slate-500" />
-                <input
-                  className="outline-none flex-1 border-b-2 p-2 bg-transparent focus:border-[#AF3E3E]"
-                  type="email"
-                  name="email"
-                  placeholder="Enter Email"
-                  required
-                />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <BiDroplet className="text-3xl text-slate-500" />
+              <div className="flex items-center gap-3 bg-[#FDD0C7]/30 px-3 py-2 rounded-lg">
+                <BiDroplet className="text-xl text-[#F09410]" />
                 <select
                   name="bloodGroup"
-                  className="outline-none flex-1 border-b-2 p-2 bg-transparent focus:border-[#AF3E3E]"
                   required
+                  className="flex-1 bg-transparent outline-none border-b-2 border-transparent focus:border-[#F09410] px-2 py-1 text-[#241705] text-sm sm:text-base"
                 >
                   <option value="">Select Blood Group</option>
                   {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(
@@ -190,17 +213,17 @@ const Register = () => {
                 </select>
               </div>
 
-              <div className="flex items-center gap-2">
-                <BiMap className="text-3xl text-slate-500" />
+              <div className="flex items-center gap-3 bg-[#FDD0C7]/30 px-3 py-2 rounded-lg">
+                <BiMap className="text-xl text-[#F09410]" />
                 <select
                   name="district"
-                  className="outline-none flex-1 border-b-2 p-2 bg-transparent focus:border-[#AF3E3E]"
                   required
                   onChange={(e) =>
                     setSelectedDistrictId(
                       districts.find((d) => d.name === e.target.value)?.id || ""
                     )
                   }
+                  className="flex-1 bg-transparent outline-none border-b-2 border-transparent focus:border-[#F09410] px-2 py-1 text-[#241705] text-sm sm:text-base"
                 >
                   <option value="">Select District</option>
                   {districts.map((d) => (
@@ -211,12 +234,12 @@ const Register = () => {
                 </select>
               </div>
 
-              <div className="flex items-center gap-2">
-                <BiMapAlt className="text-3xl text-slate-500" />
+              <div className="flex items-center gap-3 bg-[#FDD0C7]/30 px-3 py-2 rounded-lg">
+                <BiMapAlt className="text-xl text-[#F09410]" />
                 <select
                   name="upazila"
-                  className="outline-none flex-1 border-b-2 p-2 bg-transparent focus:border-[#AF3E3E]"
                   required
+                  className="flex-1 bg-transparent outline-none border-b-2 border-transparent focus:border-[#F09410] px-2 py-1 text-[#241705] text-sm sm:text-base"
                 >
                   <option value="">Select Upazila</option>
                   {upazilas.map((u) => (
@@ -227,38 +250,53 @@ const Register = () => {
                 </select>
               </div>
 
-              <div className="flex items-center gap-2">
-                <BiKey className="text-3xl text-slate-500" />
-                <input
-                  className="outline-none flex-1 border-b-2 p-2 bg-transparent focus:border-[#AF3E3E]"
-                  type="password"
-                  name="pass"
-                  placeholder="Enter Password"
-                  required
-                />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <BiKey className="text-3xl text-slate-500" />
-                <input
-                  className="outline-none flex-1 border-b-2 p-2 bg-transparent focus:border-[#AF3E3E]"
-                  type="password"
-                  name="confirmPass"
-                  placeholder="Confirm Password"
-                  required
-                />
-              </div>
+              {[
+                {
+                  icon: BiKey,
+                  type: "password",
+                  name: "pass",
+                  placeholder: "Password",
+                },
+                {
+                  icon: BiKey,
+                  type: "password",
+                  name: "confirmPass",
+                  placeholder: "Confirm Password",
+                },
+              ].map(({ icon: Icon, ...rest }, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 bg-[#FDD0C7]/30 px-3 py-2 rounded-lg"
+                >
+                  <Icon className="text-xl text-[#F09410]" />
+                  <input
+                    {...rest}
+                    required
+                    className="flex-1 bg-transparent outline-none border-b-2 border-transparent focus:border-[#F09410] px-2 py-1 text-[#241705] placeholder-gray-500 text-sm sm:text-base"
+                  />
+                </div>
+              ))}
 
               <button
                 type="submit"
                 disabled={loading}
-                className="btn cursor-pointer bg-[#CD5656] text-white"
+                className="mt-2 py-2 sm:py-3 bg-[#F09410] hover:bg-[#BC430D] text-white text-base sm:text-lg font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-300 disabled:opacity-50"
               >
                 {loading ? "Registering..." : "Register Now"}
               </button>
+
+              <p className="text-center text-sm sm:text-base text-gray-700 mt-3">
+                Already have an account?{" "}
+                <Link
+                  to="/login"
+                  className="text-[#F09410] hover:underline hover:text-[#BC430D] transition"
+                >
+                  Login Now
+                </Link>
+              </p>
             </form>
 
-            <div className="lottie flex-1 flex mx-20">
+            <div className="lottie flex-1 flex max-w-xs sm:max-w-sm md:max-w-md">
               <Lottie animationData={happy} />
             </div>
           </div>

@@ -7,6 +7,7 @@ import { AuthContext } from "../providers/AuthContext";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Table from "./Table";
 import { Check, Eye, Pencil, Trash2, XCircle } from "lucide-react";
+import Title from "./Title";
 
 const fetchRecentRequests = async ({ queryKey }) => {
   const [, { email }, axiosSecure] = queryKey;
@@ -104,59 +105,12 @@ const DonorHome = () => {
     {
       header: "Actions",
       accessor: "actions",
-      // cell: (_, row) => (
-      //   <div className="flex flex-wrap gap-2">
-      //     {row.status === "inprogress" && (
-      //       <>
-      //         <button
-      //           className="btn btn-xs btn-success"
-      //           onClick={() =>
-      //             updateStatusMutation.mutate({ id: row._id, status: "done" })
-      //           }
-      //         >
-      //           Done
-      //         </button>
-      //         <button
-      //           className="btn btn-xs btn-warning"
-      //           onClick={() =>
-      //             updateStatusMutation.mutate({
-      //               id: row._id,
-      //               status: "canceled",
-      //             })
-      //           }
-      //         >
-      //           Cancel
-      //         </button>
-      //       </>
-      //     )}
-      //     <button
-      //       className="btn btn-xs btn-info"
-      //       onClick={() =>
-      //         navigate(`/dashboard/donation-requests/${row._id}/edit`)
-      //       }
-      //     >
-      //       Edit
-      //     </button>
-      //     <button
-      //       className="btn btn-xs btn-error"
-      //       onClick={() => handleDelete(row._id)}
-      //     >
-      //       Delete
-      //     </button>
-      //     <button
-      //       className="btn btn-xs btn-primary"
-      //       onClick={() => navigate(`/dashboard/donation-requests/${row._id}`)}
-      //     >
-      //       View
-      //     </button>
-      //   </div>
-      // ),
       cell: (_, row) => (
         <div className="flex flex-wrap gap-2">
           {row.status === "inprogress" && (
             <>
               <button
-                className="btn btn-xs btn-success"
+                className="btn border-none btn-xs bg-[#3F7C49] text-white hover:bg-[#34653B]"
                 title="Mark as Done"
                 onClick={() =>
                   updateStatusMutation.mutate({ id: row._id, status: "done" })
@@ -165,7 +119,7 @@ const DonorHome = () => {
                 <Check className="w-4 h-4" />
               </button>
               <button
-                className="btn btn-xs btn-warning"
+                className="btn border-none btn-xs bg-[#AF3E3E] text-white hover:bg-[#912F2F]"
                 title="Cancel Request"
                 onClick={() =>
                   updateStatusMutation.mutate({
@@ -179,7 +133,7 @@ const DonorHome = () => {
             </>
           )}
           <button
-            className="btn btn-xs btn-info"
+            className="btn border-none btn-xs bg-[#5B4B3A] text-white hover:bg-[#4B3C2E]"
             title="Edit Request"
             onClick={() =>
               navigate(`/dashboard/donation-requests/${row._id}/edit`)
@@ -188,14 +142,14 @@ const DonorHome = () => {
             <Pencil className="w-4 h-4" />
           </button>
           <button
-            className="btn btn-xs btn-error"
+            className="btn border-none btn-xs bg-[#8A1F1F] text-white hover:bg-[#701818]"
             title="Delete Request"
             onClick={() => handleDelete(row._id)}
           >
             <Trash2 className="w-4 h-4" />
           </button>
           <button
-            className="btn btn-xs btn-primary"
+            className="btn border-none btn-xs bg-[#362E24] text-white hover:bg-[#2D241B]"
             title="View Request"
             onClick={() => navigate(`/dashboard/donation-requests/${row._id}`)}
           >
@@ -208,13 +162,13 @@ const DonorHome = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">
-        Welcome, {user?.displayName || "Donor"}!
-      </h1>
+      <div className="pt-3 mb-12 flex justify-center">
+        <Title>Welcome, {user?.displayName || "Donor"}!</Title>
+      </div>
 
       {recentRequests.length > 0 && (
         <div>
-          <h2 className="text-lg font-semibold mb-2">
+          <h2 className="text-lg md:text-2xl font-bold mb-2">
             Your Recent Donation Requests
           </h2>
           <Table
@@ -227,7 +181,7 @@ const DonorHome = () => {
           <div className="mt-4 text-center">
             <Link
               to="/dashboard/my-donation-requests"
-              className="btn bg-[#CD5656] text-white"
+              className="bg-[#F09410] hover:bg-[#BC430D] text-white px-4 py-2 rounded-md font-medium transition"
             >
               View My All Requests
             </Link>

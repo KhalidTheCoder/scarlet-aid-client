@@ -21,6 +21,9 @@ import DonationRequests from "../pages/DonationRequests";
 import Blog from "../pages/Blog";
 import BlogDetails from "../pages/BlogDetails";
 import Funding from "../pages/Funding";
+import AdminOrVolunteerRoute from "./AdminOrVolunteerRoute";
+import AdminRoute from "./AdminRoute";
+import Forbidden from "../pages/Forbidden";
 
 const mainRoutes = createBrowserRouter([
   {
@@ -31,6 +34,10 @@ const mainRoutes = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "forbidden",
+        element: <Forbidden></Forbidden>,
       },
       {
         path: "login",
@@ -125,33 +132,33 @@ const mainRoutes = createBrowserRouter([
       {
         path: "/dashboard/manage-users",
         element: (
-          <PrivateRoute>
+          <AdminRoute>
             <AllUsers></AllUsers>
-          </PrivateRoute>
+          </AdminRoute>
         ),
       },
       {
         path: "/dashboard/manage-donations",
         element: (
-          <PrivateRoute>
+          <AdminOrVolunteerRoute>
             <AllDonationRequests></AllDonationRequests>
-          </PrivateRoute>
+          </AdminOrVolunteerRoute>
         ),
       },
       {
         path: "/dashboard/content-management",
         element: (
-          <PrivateRoute>
+          <AdminOrVolunteerRoute>
             <ContentManagement />
-          </PrivateRoute>
+          </AdminOrVolunteerRoute>
         ),
       },
       {
         path: "/dashboard/add-blog",
         element: (
-          <PrivateRoute>
+          <AdminOrVolunteerRoute>
             <AddBlog />
-          </PrivateRoute>
+          </AdminOrVolunteerRoute>
         ),
       },
     ],
