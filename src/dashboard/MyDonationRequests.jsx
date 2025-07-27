@@ -124,7 +124,7 @@ const MyDonationRequests = () => {
           {row.status === "inprogress" && (
             <>
               <button
-                className="btn btn-xs btn-success"
+                className="btn border-none btn-xs bg-[#3F7C49] text-white hover:bg-[#34653B]"
                 title="Mark as Done"
                 onClick={() =>
                   updateStatusMutation.mutate({ id: row._id, status: "done" })
@@ -133,7 +133,7 @@ const MyDonationRequests = () => {
                 <Check className="w-4 h-4" />
               </button>
               <button
-                className="btn btn-xs btn-warning"
+                className="btn border-none btn-xs bg-[#AF3E3E] text-white hover:bg-[#912F2F]"
                 title="Cancel Request"
                 onClick={() =>
                   updateStatusMutation.mutate({
@@ -147,7 +147,7 @@ const MyDonationRequests = () => {
             </>
           )}
           <button
-            className="btn btn-xs btn-info"
+            className="btn border-none btn-xs bg-[#5B4B3A] text-white hover:bg-[#4B3C2E]"
             title="Edit Request"
             onClick={() =>
               navigate(`/dashboard/donation-requests/${row._id}/edit`)
@@ -156,14 +156,14 @@ const MyDonationRequests = () => {
             <Pencil className="w-4 h-4" />
           </button>
           <button
-            className="btn btn-xs btn-error"
+            className="btn border-none btn-xs bg-[#8A1F1F] text-white hover:bg-[#701818]"
             title="Delete Request"
             onClick={() => handleDelete(row._id)}
           >
             <Trash2 className="w-4 h-4" />
           </button>
           <button
-            className="btn btn-xs btn-primary"
+            className="btn border-none btn-xs bg-[#362E24] text-white hover:bg-[#2D241B]"
             title="View Request"
             onClick={() => navigate(`/dashboard/donation-requests/${row._id}`)}
           >

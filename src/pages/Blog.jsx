@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Loading from "../pages/Loading";
 import useAxios from "../hooks/useAxios";
+import Title from "../components/Title";
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -30,42 +31,59 @@ const Blog = () => {
 
   if (blogs.length === 0) {
     return (
-      <p className="text-center text-gray-500 mt-10">No published blogs available.</p>
+      <p className="text-center text-gray-500 mt-10">
+        No published blogs available.
+      </p>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {blogs.map((blog) => (
-        <div
-          key={blog._id}
-          className="card bg-base-100 shadow-md hover:shadow-xl transition cursor-pointer"
-          onClick={() => navigate(`/blog-details/${blog._id}`)}
-        >
-          <figure className="h-48 overflow-hidden">
-            <img
-              src={blog.thumbnail || "https://via.placeholder.com/400x250"}
-              alt={blog.title}
-              className="w-full h-full object-cover"
-            />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">{blog.title}</h2>
-            <p className="text-gray-600 text-sm line-clamp-3">{blog.excerpt || blog.content}</p>
-            <div className="card-actions justify-end">
-              <button
-                className="btn btn-primary btn-sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/blog-details/${blog._id}`);
-                }}
-              >
-                Read More
-              </button>
-            </div>
-          </div>
+    <div className="bg-[#FFF4E6] min-h-screen">
+      <div>
+        <div className="pt-5 mb-15 flex justify-center">
+          <Title>The Lifeline Blog</Title>
         </div>
-      ))}
+        <div className="max-w-7xl mx-auto p-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {blogs.map((blog) => (
+            <div
+              key={blog._id}
+              onClick={() => navigate(`/blog-details/${blog._id}`)}
+              className="bg-[#FDD0C7] rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer flex flex-col"
+            >
+              {/* Image */}
+              <figure className="h-48 w-full">
+                <img
+                  src={blog.thumbnail || "https://via.placeholder.com/400x250"}
+                  alt={blog.title}
+                  className="w-full h-full object-cover"
+                />
+              </figure>
+
+              {/* Content */}
+              <div className="p-4 flex flex-col flex-grow">
+                <h2 className="text-lg font-bold text-[#241705] mb-2 line-clamp-2">
+                  {blog.title}
+                </h2>
+                <p className="text-sm text-[#241705] opacity-90 line-clamp-3 flex-grow">
+                  {blog.excerpt || blog.content.replace(/<[^>]+>/g, "")}
+                </p>
+
+                <div className="mt-4 text-right">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/blog-details/${blog._id}`);
+                    }}
+                    className="inline-block bg-[#F09410] hover:bg-[#BC430D] text-white text-sm font-semibold py-1.5 px-4 rounded-full transition-colors duration-200"
+                  >
+                    Read More
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

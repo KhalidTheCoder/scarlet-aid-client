@@ -1,5 +1,6 @@
 import { Outlet } from "react-router";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const RootLayout = () => {
   return (
@@ -7,6 +8,7 @@ const RootLayout = () => {
       <Header></Header>
       <main className="overflow-x-clip">
         <Outlet></Outlet>
+        <Footer></Footer>
       </main>
     </div>
   );

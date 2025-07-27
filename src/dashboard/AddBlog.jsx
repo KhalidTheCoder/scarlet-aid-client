@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useUserRole from "../hooks/useUserRole";
 import Loading from "../pages/Loading";
+import Title from "../components/Title";
 
 const AddBlog = () => {
   const navigate = useNavigate();
@@ -75,60 +76,62 @@ const AddBlog = () => {
   if (roleLoading) return <Loading />;
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10 bg-white shadow-lg rounded-2xl mt-25">
-      <h2 className="text-3xl font-semibold text-gray-800 mb-8 border-b pb-2">
-        📝 Add New Blog
-      </h2>
+    <div>
+      <div className="pt-3 mb-12 flex justify-center">
+        <Title>Start Writing Your Blog</Title>
+      </div>
+      <div className="max-w-4xl mx-auto px-6 py-10 bg-[#FDD0C7] shadow-xl rounded-2xl mt-12">
+        <h2 className="text-3xl font-bold text-[#241705] mb-8 border-b-2 border-[#F09410] pb-2">
+          📝 Create a New Blog
+        </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Title */}
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">
-            Blog Title
-          </label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter your blog title"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#CD5656] focus:border-transparent"
-          />
-        </div>
-
-        {/* Thumbnail */}
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">
-            Thumbnail Image
-          </label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setThumbnail(e.target.files[0])}
-            className="w-full px-4 py-2 file-input file-input-bordered rounded-lg shadow-sm"
-          />
-        </div>
-
-        {/* Content */}
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">
-            Content
-          </label>
-          <div className="border rounded-lg overflow-hidden shadow-sm focus-within:ring-2 focus-within:ring-[#CD5656]">
-            <JoditEditor
-              value={content}
-              onChange={(newContent) => setContent(newContent)}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-lg font-semibold text-[#241705] mb-2">
+              Blog Title
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter your blog title"
+              className="w-full px-4 py-3 border border-[#F09410] rounded-lg bg-white text-[#241705] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F09410] focus:border-transparent"
             />
           </div>
-        </div>
 
-        <button
-          type="submit"
-          disabled={createBlogMutation.isLoading}
-          className="w-full py-3 px-6 bg-[#CD5656] text-white font-semibold rounded-lg shadow-md hover:bg-[#b64e4e] transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {createBlogMutation.isLoading ? "Creating..." : "Create Blog"}
-        </button>
-      </form>
+          <div>
+            <label className="block text-lg font-semibold text-[#241705] mb-2">
+              Thumbnail Image
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setThumbnail(e.target.files[0])}
+              className="file-input file-input-bordered w-full border-[#F09410] bg-white text-[#241705] shadow-sm"
+            />
+          </div>
+
+          <div>
+            <label className="block text-lg font-semibold text-[#241705] mb-2">
+              Blog Content
+            </label>
+            <div className="border border-[#F09410] rounded-lg overflow-hidden shadow-sm focus-within:ring-2 focus-within:ring-[#F09410]">
+              <JoditEditor
+                value={content}
+                onChange={(newContent) => setContent(newContent)}
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={createBlogMutation.isLoading}
+            className="w-full py-3 px-6 bg-[#F09410] text-white font-semibold rounded-lg shadow-md hover:bg-[#BC430D] transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {createBlogMutation.isLoading ? "Creating..." : "Create Blog"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

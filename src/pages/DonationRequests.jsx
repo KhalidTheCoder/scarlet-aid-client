@@ -6,6 +6,7 @@ import useAxios from "../hooks/useAxios";
 import Loading from "../pages/Loading";
 import Table from "../components/Table";
 import { Eye } from "lucide-react";
+import Title from "../components/Title";
 
 const fetchPendingRequests = async ({ queryKey }) => {
   const [, { page, limit }, axios] = queryKey;
@@ -71,7 +72,8 @@ const DonationRequests = () => {
       accessor: "view",
       cell: (_, row) => (
         <button
-          className="btn btn-sm btn-neutral"
+          className="btn border-none btn-xs bg-[#362E24] text-white hover:bg-[#2D241B]"
+          title="View Request"
           onClick={() => handleView(row._id)}
         >
           <Eye className="w-4 h-4"></Eye>
@@ -81,39 +83,41 @@ const DonationRequests = () => {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">
-        Pending Donation Requests
-      </h1>
-      <Table
-        columns={columns}
-        data={requests}
-        currentPage={page}
-        limit={limit}
-        emptyMessage="No pending donation requests."
-      />
-
-      {totalPages > 1 && (
-        <div className="join mt-6 flex justify-center">
-          <button
-            className="join-item btn"
-            disabled={page === 1}
-            onClick={() => setPage((p) => p - 1)}
-          >
-            «
-          </button>
-          <button className="join-item btn">
-            Page {page} of {totalPages}
-          </button>
-          <button
-            className="join-item btn"
-            disabled={page === totalPages}
-            onClick={() => setPage((p) => p + 1)}
-          >
-            »
-          </button>
+    <div className="bg-[#FFF4E6] min-h-screen">
+      <div className="max-w-7xl mx-auto p-6">
+        <div className="mt-5 mb-15 flex justify-center">
+          <Title>Pending Donation Requests</Title>
         </div>
-      )}
+        <Table
+          columns={columns}
+          data={requests}
+          currentPage={page}
+          limit={limit}
+          emptyMessage="No pending donation requests."
+        />
+
+        {totalPages > 1 && (
+          <div className="join mt-6 flex justify-center">
+            <button
+              className="join-item btn"
+              disabled={page === 1}
+              onClick={() => setPage((p) => p - 1)}
+            >
+              «
+            </button>
+            <button className="join-item btn">
+              Page {page} of {totalPages}
+            </button>
+            <button
+              className="join-item btn"
+              disabled={page === totalPages}
+              onClick={() => setPage((p) => p + 1)}
+            >
+              »
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

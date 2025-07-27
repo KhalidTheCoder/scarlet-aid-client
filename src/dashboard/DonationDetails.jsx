@@ -17,6 +17,7 @@ import {
   BiEnvelope,
 } from "react-icons/bi";
 import { FaHospitalSymbol } from "react-icons/fa";
+import Title from "../components/Title";
 
 const fetchDonationDetails = async ({ queryKey }) => {
   const [, id, axiosSecure] = queryKey;
@@ -45,11 +46,19 @@ const DonationDetails = () => {
       return res.data;
     },
     onSuccess: () => {
-      Swal.fire("✅ Success!", "You have confirmed your donation.", "success");
+      Swal.fire({
+        icon: "success",
+        title: "Donation Confirmed",
+        text: "Thank you! Your donation has been successfully recorded.",
+      });
       navigate("/dashboard");
     },
     onError: () => {
-      Swal.fire("❌ Error!", "Failed to confirm donation.", "error");
+      Swal.fire({
+        icon: "error",
+        title: "Confirmation Failed",
+        text: "We couldn't confirm your donation at this time. Please try again later.",
+      });
     },
   });
 
@@ -97,97 +106,97 @@ const DonationDetails = () => {
 
   return (
     <div className="">
-
-       <div className="flex justify-center items-center mt-20">
-        <div className="bg-white shadow-2xl rounded-xl max-w-4xl w-full p-10 border border-gray-200 text-gray-800">
-        <h2 className="text-3xl font-bold text-center text-black mb-8 flex items-center justify-center gap-2">
-          <BiDroplet className="text-4xl" /> Donation Request Details
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-base">
-          <div>
-            <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-              <BiUser className="text-red-600" /> Recipient Info
-            </h3>
-            <p className="font-medium">
-              <BiUser className="inline mr-1" /> {recipientName}
-            </p>
-            <p className="font-medium">
-              <BiMap className="inline mr-1" /> {recipientDistrict},{" "}
-              {recipientUpazila}
-            </p>
-            <p className="font-medium">
-              <BiMap className="inline mr-1" /> {fullAddress}
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-              <BiCalendar className="text-red-600" /> Donation Info
-            </h3>
-            <p className="font-medium">
-              <BiCalendar className="inline mr-1" /> {donationDate}
-            </p>
-            <p className="font-medium">
-              <BiTime className="inline mr-1" /> {donationTime}
-            </p>
-            <p className="font-medium">
-              <FaHospitalSymbol className="inline mr-1" /> {hospitalName}
-            </p>
-            <p className="font-medium">
-              <BiMessageDetail className="inline mr-1" /> {requestMessage}
-            </p>
-          </div>
-        </div>
-
-        <div className="divider my-6"></div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-base">
-          <div>
-            <h4 className="text-xl font-semibold mb-3 flex items-center gap-2">
-              <BiUser className="text-red-600" /> Requester Info
-            </h4>
-            <p className="font-medium">
-              <BiUser className="inline mr-1" /> {requesterName}
-            </p>
-            <p className="font-medium">
-              <BiEnvelope className="inline mr-1" /> {requesterEmail}
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-3 justify-center">
-            <p className="font-semibold text-lg">
-              <BiDroplet className="inline mr-1 text-red-600" /> Blood Group:{" "}
-              <span className="badge bg-gray-200 text-black ml-2">
-                {bloodGroup}
-              </span>
-            </p>
-            <p className="font-semibold text-lg">
-              Status:{" "}
-              <span
-                className={`badge ml-2 ${
-                  status === "pending" ? "badge-warning" : "badge-success"
-                }`}
-              >
-                {status}
-              </span>
-            </p>
-          </div>
-        </div>
-
-        {status === "pending" && (
-          <div className="mt-10">
-            <button
-              onClick={handleDonate}
-              className="btn bg-[#CD5656] btn-lg w-full text-white text-lg font-semibold tracking-wide shadow-md hover:shadow-xl transition duration-300"
-            >
-              Confirm Donation
-            </button>
-          </div>
-        )}
+      <div className="pt-3 mb-12 flex justify-center">
+        <Title>Donation Request Overview</Title>
       </div>
-       </div>
-      
+      <div className="flex justify-center items-center mt-20 px-4">
+        <div className="bg-gradient-to-br from-[#FDD0C7] via-[#FEE5DA] to-[#FDD0C7] shadow-2xl rounded-2xl max-w-4xl w-full p-8 md:p-10 text-[#241705]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="bg-white/70 rounded-xl p-5 shadow-sm border border-[#F09410]/20">
+              <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-[#BC430D]">
+                <BiUser /> Recipient Info
+              </h3>
+              <p className="font-medium flex items-center gap-2">
+                <BiUser className="text-[#F09410]" /> {recipientName}
+              </p>
+              <p className="font-medium flex items-center gap-2">
+                <BiMap className="text-[#F09410]" /> {recipientDistrict},{" "}
+                {recipientUpazila}
+              </p>
+              <p className="font-medium flex items-center gap-2">
+                <BiMap className="text-[#F09410]" /> {fullAddress}
+              </p>
+            </div>
+
+            <div className="bg-white/70 rounded-xl p-5 shadow-sm border border-[#F09410]/20">
+              <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-[#BC430D]">
+                <BiCalendar /> Donation Info
+              </h3>
+              <p className="font-medium flex items-center gap-2">
+                <BiCalendar className="text-[#F09410]" /> {donationDate}
+              </p>
+              <p className="font-medium flex items-center gap-2">
+                <BiTime className="text-[#F09410]" /> {donationTime}
+              </p>
+              <p className="font-medium flex items-center gap-2">
+                <FaHospitalSymbol className="text-[#F09410]" /> {hospitalName}
+              </p>
+              <p className="font-medium flex items-start gap-2">
+                <BiMessageDetail className="text-[#F09410] mt-1" />{" "}
+                {requestMessage}
+              </p>
+            </div>
+          </div>
+
+          <div className="my-8 border-t border-2 border-[#F09410]/40"></div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white/70 rounded-xl p-5 shadow-sm border border-[#F09410]/20">
+              <h4 className="text-xl font-bold mb-4 flex items-center gap-2 text-[#BC430D]">
+                <BiUser /> Requester Info
+              </h4>
+              <p className="font-medium flex items-center gap-2">
+                <BiUser className="text-[#F09410]" /> {requesterName}
+              </p>
+              <p className="font-medium flex items-center gap-2">
+                <BiEnvelope className="text-[#F09410]" /> {requesterEmail}
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-5 justify-center bg-white/70 rounded-xl p-5 shadow-sm border border-[#F09410]/20">
+              <p className="font-semibold text-lg flex items-center gap-2">
+                <BiDroplet className="text-[#BC430D]" /> Blood Group:{" "}
+                <span className="ml-2 bg-[#FDD0C7] text-[#241705] px-4 py-1 rounded-lg shadow-sm border border-[#F09410]">
+                  {bloodGroup}
+                </span>
+              </p>
+              <p className="font-semibold text-lg flex items-center gap-2">
+                Status:
+                <span
+                  className={`ml-2 px-4 py-1 rounded-lg shadow-sm ${
+                    status === "pending"
+                      ? "bg-yellow-200 text-yellow-900 border border-yellow-300"
+                      : "bg-green-200 text-green-900 border border-green-300"
+                  }`}
+                >
+                  {status}
+                </span>
+              </p>
+            </div>
+          </div>
+
+          {status === "pending" && (
+            <div className="mt-10">
+              <button
+                onClick={handleDonate}
+                className="w-full py-3 bg-[#F09410] hover:bg-[#BC430D] text-white text-lg font-bold rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-0.5 duration-300"
+              >
+                Confirm Donation
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

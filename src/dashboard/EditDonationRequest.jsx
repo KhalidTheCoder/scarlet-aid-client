@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Loading from "../pages/Loading";
 import useAxiosSecure from "../hooks/useAxiosSecure";
-
+import Title from "../components/Title";
 
 const fetchDonationRequestById = async ({ queryKey }) => {
   const [, id, axiosSecure] = queryKey;
@@ -115,31 +115,40 @@ const EditDonationRequest = () => {
   const onSubmit = (data) => mutation.mutate(data);
 
   return (
-    <div className="p-6 max-w-2xl mx-auto bg-base-100 rounded-3xl shadow">
-      <h1 className="text-2xl font-bold mb-4">Edit Donation Request</h1>
-      
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <div className="">
+      <div className="pt-3 mb-12 flex justify-center">
+        <Title>Edit Donation Request</Title>
+      </div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-6 bg-[#FDD0C7] max-w-3xl mx-auto p-6 md:p-8 rounded-2xl shadow-xl"
+      >
         <div>
-          <label className="block font-medium mb-1">Recipient Name</label>
+          <label className="block text-[#241705] font-semibold mb-2">
+            Recipient Name
+          </label>
           <input
             type="text"
             {...register("recipientName", { required: true })}
-            className="input input-bordered w-full"
+            placeholder="Enter recipient full name"
+            className="w-full px-4 py-2 border border-[#F09410] rounded-lg bg-white text-[#241705] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F09410]"
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block font-medium mb-1">Recipient District</label>
+            <label className="block text-[#241705] font-semibold mb-2">
+              Recipient District
+            </label>
             <select
               {...register("recipientDistrict", { required: true })}
-              className="select select-bordered w-full"
               onChange={(e) => {
                 const districtId =
                   districts.find((d) => d.name === e.target.value)?.id || "";
                 setSelectedDistrictId(districtId);
                 setValue("recipientUpazila", "");
               }}
+              className="w-full px-4 py-2 border border-[#F09410] rounded-lg bg-white text-[#241705] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F09410]"
             >
               <option value="">Select District</option>
               {districts.map((d) => (
@@ -149,11 +158,14 @@ const EditDonationRequest = () => {
               ))}
             </select>
           </div>
+
           <div>
-            <label className="block font-medium mb-1">Recipient Upazila</label>
+            <label className="block text-[#241705] font-semibold mb-2">
+              Recipient Upazila
+            </label>
             <select
               {...register("recipientUpazila", { required: true })}
-              className="select select-bordered w-full"
+              className="w-full px-4 py-2 border border-[#F09410] rounded-lg bg-white text-[#241705] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F09410]"
             >
               <option value="">Select Upazila</option>
               {upazilas.map((u) => (
@@ -166,47 +178,61 @@ const EditDonationRequest = () => {
         </div>
 
         <div>
-          <label className="block font-medium mb-1">Hospital Name</label>
+          <label className="block text-[#241705] font-semibold mb-2">
+            Hospital Name
+          </label>
           <input
             type="text"
             {...register("hospitalName", { required: true })}
-            className="input input-bordered w-full"
+            placeholder="e.g. Dhaka Medical College"
+            className="w-full px-4 py-2 border border-[#F09410] rounded-lg bg-white text-[#241705] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F09410]"
           />
         </div>
 
         <div>
-          <label className="block font-medium mb-1">Full Address</label>
+          <label className="block text-[#241705] font-semibold mb-2">
+            Full Address
+          </label>
           <textarea
             {...register("fullAddress", { required: true })}
-            className="textarea textarea-bordered w-full"
+            placeholder="e.g. Zahir Raihan Rd, Dhaka"
+            className="w-full px-4 py-2 border border-[#F09410] rounded-lg bg-white text-[#241705] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F09410]"
+            rows={3}
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block font-medium mb-1">Donation Date</label>
+            <label className="block text-[#241705] font-semibold mb-2">
+              Donation Date
+            </label>
             <input
               type="date"
               {...register("donationDate", { required: true })}
-              className="input input-bordered w-full"
+              className="w-full px-4 py-2 border border-[#F09410] rounded-lg bg-white text-[#241705] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F09410]"
             />
           </div>
           <div>
-            <label className="block font-medium mb-1">Donation Time</label>
+            <label className="block text-[#241705] font-semibold mb-2">
+              Donation Time
+            </label>
             <input
               type="time"
               {...register("donationTime", { required: true })}
-              className="input input-bordered w-full"
+              className="w-full px-4 py-2 border border-[#F09410] rounded-lg bg-white text-[#241705] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F09410]"
             />
           </div>
         </div>
 
         <div>
-          <label className="block font-medium mb-1">Blood Group</label>
+          <label className="block text-[#241705] font-semibold mb-2">
+            Blood Group
+          </label>
           <select
             {...register("bloodGroup", { required: true })}
-            className="select select-bordered w-full"
+            className="w-full px-4 py-2 border border-[#F09410] rounded-lg bg-white text-[#241705] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F09410]"
           >
+            <option value="">Select Blood Group</option>
             {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((group) => (
               <option key={group} value={group}>
                 {group}
@@ -216,14 +242,21 @@ const EditDonationRequest = () => {
         </div>
 
         <div>
-          <label className="block font-medium mb-1">Request Message</label>
+          <label className="block text-[#241705] font-semibold mb-2">
+            Request Message
+          </label>
           <textarea
             {...register("requestMessage", { required: true })}
-            className="textarea textarea-bordered w-full"
+            placeholder="Explain why you need the blood in detail..."
+            className="w-full px-4 py-3 border border-[#F09410] rounded-lg bg-white text-[#241705] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F09410]"
+            rows={4}
           />
         </div>
 
-        <button type="submit" className="btn bg-[#CD5656] text-white w-full">
+        <button
+          type="submit"
+          className="w-full py-3 bg-[#F09410] hover:bg-[#BC430D] text-white font-semibold rounded-lg shadow-md transition duration-200"
+        >
           Update Donation Request
         </button>
       </form>

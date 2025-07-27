@@ -33,7 +33,7 @@ const Header = () => {
 
   return (
     <nav className="sticky top-0 z-50 bg-gradient-to-r from-[#BC430d] to-[#241705] text-white shadow-md font-inter">
-      <div className="w-11/12 mx-auto py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto py-4 flex justify-between items-center">
         {/* Logo */}
         <Link
           to="/"
