@@ -214,7 +214,7 @@ const SearchDonors = () => {
                         </span>
                       </td>
                       <td>
-                        <span className="badge badge-accent">
+                        <span className="badge bg-[#F09410] text-white font-semibold">
                           {donor.bloodGroup}
                         </span>
                       </td>

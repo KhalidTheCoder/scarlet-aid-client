@@ -3,6 +3,7 @@ import { CgMenuMotion } from "react-icons/cg";
 import { RiMenuAddLine } from "react-icons/ri";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../providers/AuthContext";
+import logoImg from "../assets/logo.JPG";
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -10,7 +11,6 @@ const Header = () => {
   const [isAvatarOpen, setIsAvatarOpen] = useState(false);
   const avatarRef = useRef();
 
-  // Close avatar dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (avatarRef.current && !avatarRef.current.contains(e.target)) {
@@ -35,11 +35,12 @@ const Header = () => {
     <nav className="sticky top-0 z-50 bg-gradient-to-r from-[#BC430d] to-[#241705] text-white shadow-md font-inter">
       <div className="max-w-7xl mx-auto py-4 flex justify-between items-center">
         {/* Logo */}
-        <Link
-          to="/"
-          className="text-xl font-bold tracking-wide hover:scale-105 transition-transform duration-200"
-        >
-          ScarletAid
+
+        <Link to="/" className="flex justify-center items-center gap-2">
+          <img className="w-12 rounded-3xl" src={logoImg} alt="" />
+          <h1 className="text-xl font-bold tracking-wide hover:scale-105 transition-transform duration-200">
+            ScarletAid
+          </h1>
         </Link>
 
         {/* Desktop Menu */}

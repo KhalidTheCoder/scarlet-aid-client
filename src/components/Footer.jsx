@@ -6,14 +6,20 @@ import {
   FaEnvelope,
   FaPhoneAlt,
 } from "react-icons/fa";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
+import logoImg from "../assets/logo.JPG";
 
 const Footer = () => {
   return (
     <footer className="bg-gradient-to-r from-[#BC430D] to-[#241705] text-white font-inter pt-16 pb-10 shadow-lg">
       <div className="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
-          <h2 className="text-3xl font-bold tracking-wide mb-4">ScarletAid</h2>
+          <Link to="/" className="flex items-center gap-2 mb-4">
+            <img className="w-12 rounded-3xl" src={logoImg} alt="" />
+            <h1 className="text-xl font-bold tracking-wide hover:scale-105 transition-transform duration-200">
+              ScarletAid
+            </h1>
+          </Link>
           <p className="text-sm leading-relaxed text-white/90 font-medium">
             ScarletAid is a trusted platform that connects compassionate donors
             with individuals in urgent need, empowering communities through the
