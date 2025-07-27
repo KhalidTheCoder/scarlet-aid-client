@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 const RootLayout = () => {
   return (
-    <div>
+    <div className="bg-gray-50">
       <Header></Header>
       <main className="overflow-x-clip">
         <Outlet></Outlet>

@@ -5,6 +5,7 @@ import { BiImageAdd } from "react-icons/bi";
 import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthContext";
 import Title from "../components/Title";
+import Loading from "../pages/Loading";
 
 const fetchDistricts = async () => {
   const res = await fetch("/src/assets/districtsAndUpazilas/district.json");
@@ -91,7 +92,7 @@ const Profile = () => {
   });
 
   if (isLoading)
-    return <div className="text-center p-4">Loading profile...</div>;
+    return <Loading></Loading>;
   if (isError)
     return (
       <div className="text-center text-red-500">Failed to load profile.</div>
