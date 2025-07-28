@@ -8,6 +8,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import loginAnimation from "../assets/loginAnimation.json";
 
 import { AuthContext } from "../providers/AuthContext";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const { signInUser } = useContext(AuthContext);
@@ -24,12 +25,25 @@ const Login = () => {
 
     signInUser(email, pass)
       .then(() => {
-        navigate(`${location.state ? location.state : "/"}`);
+        Swal.fire({
+          title: "Login Successful!",
+          text: "Welcome Back to the Platform.",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          background: "#FFF4E6",
+          color: "#241705",
+        });
+        setTimeout(() => {
+          navigate(`${location.state ? location.state : "/"}`);
+        }, 2000);
       })
       .catch((err) => {
         setError(err.message || "Failed to login. Please try again.");
       });
   };
+
   return (
     <div className="bg-[#FFF4E6]">
       <div className="pt-8 flex justify-center">

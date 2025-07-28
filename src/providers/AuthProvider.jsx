@@ -55,7 +55,7 @@ const AuthProvider = ({ children }) => {
 
     if (loggedInUser) {
       
-      axios.get("http://localhost:5000/", {
+      axios.get("https://scarlet-aid-server.vercel.app/", {
         headers: {
           Authorization: `Bearer ${loggedInUser.accessToken}`,
         },

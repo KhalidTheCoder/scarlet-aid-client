@@ -3,6 +3,7 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Lottie from "lottie-react";
 import loadingAnimation from "../assets/loading.json";
+import Swal from "sweetalert2";
 
 const CheckoutForm = ({ amount, onSuccess }) => {
   const stripe = useStripe();
@@ -35,6 +36,16 @@ const CheckoutForm = ({ amount, onSuccess }) => {
         setError(result.error.message);
       } else if (result.paymentIntent.status === "succeeded") {
         await axiosSecure.post("/funding", { amount });
+
+        Swal.fire({
+          title: "Payment Successful!",
+          text: `You Have Donated $${amount}. Thank you!`,
+          icon: "success",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          color: "#241705",
+        });
 
         onSuccess?.(result.paymentIntent);
       }

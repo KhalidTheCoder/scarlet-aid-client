@@ -14,7 +14,7 @@ const fetchDonationRequestById = async ({ queryKey }) => {
 };
 
 const fetchDistricts = async () => {
-  const res = await fetch("/src/assets/districtsAndUpazilas/district.json");
+  const res = await fetch("/district.json");
   const json = await res.json();
   return (
     json.find((item) => item.type === "table" && item.name === "districts")
@@ -23,7 +23,7 @@ const fetchDistricts = async () => {
 };
 
 const fetchUpazilas = async () => {
-  const res = await fetch("/src/assets/districtsAndUpazilas/upazilas.json");
+  const res = await fetch("/upazilas.json");
   const json = await res.json();
   return (
     json.find((item) => item.type === "table" && item.name === "upazilas")
