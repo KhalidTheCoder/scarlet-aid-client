@@ -35,9 +35,7 @@ const Login = () => {
           background: "#FFF4E6",
           color: "#241705",
         });
-        setTimeout(() => {
-          navigate(`${location.state ? location.state : "/"}`);
-        }, 2000);
+        navigate(`${location.state ? location.state : "/"}`);
       })
       .catch((err) => {
         setError(err.message || "Failed to login. Please try again.");
