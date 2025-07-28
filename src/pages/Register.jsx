@@ -20,7 +20,7 @@ import useAxios from "../hooks/useAxios";
 import loadingAnimation from "../assets/loading.json";
 
 const fetchDistricts = async () => {
-  const res = await fetch("/src/assets/districtsAndUpazilas/district.json");
+  const res = await fetch("/district.json");
   if (!res.ok) throw new Error("Failed to fetch districts");
   const json = await res.json();
   const table = json.find(
@@ -30,7 +30,7 @@ const fetchDistricts = async () => {
 };
 
 const fetchUpazilas = async () => {
-  const res = await fetch("/src/assets/districtsAndUpazilas/upazilas.json");
+  const res = await fetch("/upazilas.json");
   if (!res.ok) throw new Error("Failed to fetch upazilas");
   const json = await res.json();
   const table = json.find(
@@ -137,6 +137,7 @@ const Register = () => {
         icon: "success",
         confirmButtonText: "Continue",
         confirmButtonColor: "#F09410",
+        background: "#FFF4E6",
       });
       navigate(`${location.state ? location.state : "/"}`);
     } catch (error) {

@@ -8,7 +8,7 @@ import Title from "../components/Title";
 import Loading from "../pages/Loading";
 
 const fetchDistricts = async () => {
-  const res = await fetch("/src/assets/districtsAndUpazilas/district.json");
+  const res = await fetch("/district.json");
   if (!res.ok) throw new Error("Failed to fetch districts");
   const json = await res.json();
   const table = json.find(
@@ -18,7 +18,7 @@ const fetchDistricts = async () => {
 };
 
 const fetchUpazilas = async () => {
-  const res = await fetch("/src/assets/districtsAndUpazilas/upazilas.json");
+  const res = await fetch("/upazilas.json");
   if (!res.ok) throw new Error("Failed to fetch upazilas");
   const json = await res.json();
   const table = json.find(

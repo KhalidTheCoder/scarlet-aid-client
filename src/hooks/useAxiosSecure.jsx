@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { AuthContext } from "../providers/AuthContext";
 
 const axiosSecure = axios.create({
-  baseURL: `http://localhost:5000/`,
+  baseURL: `https://scarlet-aid-server.vercel.app/`,
 });
 
 const useAxiosSecure = () => {
