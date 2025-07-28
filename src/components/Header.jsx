@@ -193,7 +193,7 @@ const Header = () => {
               Login
             </NavLink>
             <NavLink
-              to="/register"
+              to="/registration"
               onClick={() => setIsMenuOpen(false)}
               className="py-2 hover:text-orange-400"
             >
