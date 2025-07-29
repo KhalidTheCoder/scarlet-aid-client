@@ -55,7 +55,7 @@ const AdminHome = () => {
             </p>
           </div>
           <div>
-            <Link to="/dashboard/manage-users" className={linkStyle}>
+            <Link to="/dashboard/all-users" className={linkStyle}>
               View Donors <ArrowRight className="w-4 h-4 ml-1" />
             </Link>
           </div>
@@ -99,7 +99,7 @@ const AdminHome = () => {
             </p>
           </div>
           <div>
-            <Link to="/dashboard/manage-donations" className={linkStyle}>
+            <Link to="/dashboard/all-blood-donation-request" className={linkStyle}>
               View Requests <ArrowRight className="w-4 h-4 ml-1" />
             </Link>
           </div>

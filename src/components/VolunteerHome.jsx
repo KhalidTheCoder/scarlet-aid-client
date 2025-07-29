@@ -93,7 +93,7 @@ const VolunteerHome = () => {
             </p>
           </div>
           <div>
-            <Link to="/dashboard/manage-donations" className={linkStyle}>
+            <Link to="/dashboard/all-blood-donation-request" className={linkStyle}>
               View Requests <ArrowRight className="w-4 h-4 ml-1" />
             </Link>
           </div>
