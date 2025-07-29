@@ -130,7 +130,7 @@ const mainRoutes = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/manage-users",
+        path: "/dashboard/all-users",
         element: (
           <AdminRoute>
             <AllUsers></AllUsers>
@@ -138,7 +138,7 @@ const mainRoutes = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/manage-donations",
+        path: "/dashboard/all-blood-donation-request",
         element: (
           <AdminOrVolunteerRoute>
             <AllDonationRequests></AllDonationRequests>

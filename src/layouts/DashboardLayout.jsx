@@ -94,7 +94,7 @@ const DashboardLayout = () => {
           {!roleLoading && role === "volunteer" && (
             <>
               <NavLink
-                to="/dashboard/manage-donations"
+                to="/dashboard/all-blood-donation-request"
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
                   `p-2 rounded transition-colors duration-200 ${
@@ -125,7 +125,7 @@ const DashboardLayout = () => {
           {!roleLoading && role === "admin" && (
             <>
               <NavLink
-                to="/dashboard/manage-users"
+                to="/dashboard/all-users"
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
                   `p-2 rounded transition-colors duration-200 ${
@@ -138,7 +138,7 @@ const DashboardLayout = () => {
                 <span className="font-medium">Manage Users</span>
               </NavLink>
               <NavLink
-                to="/dashboard/manage-donations"
+                to="/dashboard/all-blood-donation-request"
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
                   `p-2 rounded transition-colors duration-200 ${
