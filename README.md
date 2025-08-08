@@ -79,6 +79,7 @@ ScarletAid is a full-stack blood donation platform built to connect people in ur
    
    
 2. Set up and run the server:
+   ```bash
    - cd scarlet-aid-server
    
    - Install dependencies:
@@ -86,14 +87,14 @@ ScarletAid is a full-stack blood donation platform built to connect people in ur
    - Start the server:
      nodemon index.js
 
-3. Set up and run the client:
-   Open a new terminal and navigate to the client directory:
+4. Set up and run the client:
+   - Open a new terminal and navigate to the client directory:
    - cd scarlet-aid-client
 
    - Install dependencies:
      npm install
      
-4. Create a .env file in the client folder and add:
+5. Create a .env file in the client folder and add:
    
    - VITE_API_URL=http://localhost:5000
 
