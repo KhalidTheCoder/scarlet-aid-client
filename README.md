@@ -73,8 +73,8 @@ ScarletAid is a full-stack blood donation platform built to connect people in ur
    Client:
    git clone https://github.com/KhalidTheCoder/scarlet-aid-client.git
    
-   Server::
-   git clone https://github.com/KhalidTheCoder/scarlet-aid-client.git
+   Server:
+   git clone https://github.com/KhalidTheCoder/scarlet-aid-server.git
 
    
    
