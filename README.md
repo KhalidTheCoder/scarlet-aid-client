@@ -67,6 +67,9 @@ ScarletAid is a full-stack blood donation platform built to connect people in ur
 ---
 
 ## 🚀 How to Run Locally
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/KhalidTheCoder/scarlet-aid-client.git
 
 1. Clone both repositories:
    
