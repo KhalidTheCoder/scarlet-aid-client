@@ -27,7 +27,7 @@ ScarletAid is a full-stack blood donation platform built to connect people in ur
 
 ## 🖼️ Screenshot
 
-![ScarletAid Screenshot](https://github.com/KhalidTheCoder/scarlet-aid-client/blob/main/IMG_0900.JPG)  
+![ScarletAid Screenshot](https://github.com/KhalidTheCoder/scarlet-aid-client/raw/main/IMG_0900.JPG)
 
 
 ---
