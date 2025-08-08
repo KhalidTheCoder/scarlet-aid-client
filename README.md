@@ -84,6 +84,7 @@ ScarletAid is a full-stack blood donation platform built to connect people in ur
 
 4. Set up and run the client:
    - Open a new terminal and navigate to the client directory:
+     
    ```bash
    cd scarlet-aid-client
    npm install
