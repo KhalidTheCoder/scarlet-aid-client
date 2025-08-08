@@ -106,11 +106,11 @@ ScarletAid is a full-stack blood donation platform built to connect people in ur
 
 
 ## 👤 Admin Access (Demo Credentials)
-Username: admin@scarletaid.com
-Password: Admin@1234
+- Username: admin@scarletaid.com
+- Password: Admin@1234
 
 ## 📚 Additional Resources
-Live Demo: https://assignment-12-9d5a6.web.app/
+- Live Demo: https://assignment-12-9d5a6.web.app/
 
 
 
