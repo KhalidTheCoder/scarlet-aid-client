@@ -90,9 +90,17 @@ ScarletAid is a full-stack blood donation platform built to connect people in ur
     cd scarlet-aid-client
     npm install
      
-4. Create a .env file in the client folder and add:
+4. Create a .env file in the client folder and add your environment variables (example):
    
-   - VITE_API_URL=http://localhost:5000
+     ```ini
+    VITE_API_URL=http://localhost:5000
+
+    VITE_apiKey=your_firebase_api_key
+    VITE_authDomain=your_firebase_auth_domain
+    VITE_projectId=your_firebase_project_id
+    VITE_storageBucket=your_firebase_storage_bucket
+    VITE_messagingSenderId=your_firebase_messaging_sender_id
+    VITE_appId=your_firebase_app_id
 
 5. Start the client:
    ```bash
