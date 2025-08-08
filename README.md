@@ -107,6 +107,7 @@ ScarletAid is a full-stack blood donation platform built to connect people in ur
    npm run dev
    
 6. Open your browser and go to:
+   ```arduino
    http://localhost:3000
 
 
