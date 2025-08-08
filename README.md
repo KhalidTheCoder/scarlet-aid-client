@@ -59,8 +59,7 @@ ScarletAid is a full-stack blood donation platform built to connect people in ur
 - express  
 - mongoose  
 - lottie-react  
-- dotenv  
-- bcryptjs  
+- dotenv   
 - cors  
 
 
@@ -80,7 +79,7 @@ ScarletAid is a full-stack blood donation platform built to connect people in ur
    
    
 2. Set up and run the server:
-    cd scarlet-aid-server
+   - cd scarlet-aid-server
    
    - Install dependencies:
      npm install
@@ -109,8 +108,7 @@ ScarletAid is a full-stack blood donation platform built to connect people in ur
 - Username: admin@scarletaid.com
 - Password: Admin@1234
 
-## 📚 Additional Resources
-- Live Demo: https://assignment-12-9d5a6.web.app/
+
 
 
 
