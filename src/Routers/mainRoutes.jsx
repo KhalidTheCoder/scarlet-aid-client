@@ -24,6 +24,7 @@ import Funding from "../pages/Funding";
 import AdminOrVolunteerRoute from "./AdminOrVolunteerRoute";
 import AdminRoute from "./AdminRoute";
 import Forbidden from "../pages/Forbidden";
+import Overview from "../dashboard/Overview";
 
 const mainRoutes = createBrowserRouter([
   {
@@ -86,6 +87,14 @@ const mainRoutes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <DashboardHome />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "overview",
+        element: (
+          <PrivateRoute>
+            <Overview></Overview>
           </PrivateRoute>
         ),
       },

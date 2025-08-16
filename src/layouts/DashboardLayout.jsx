@@ -50,6 +50,20 @@ const DashboardLayout = () => {
             <span className="font-medium">Home</span>
           </NavLink>
           <NavLink
+            to="/dashboard/overview"
+            end
+            onClick={() => setIsOpen(false)}
+            className={({ isActive }) =>
+              `p-2 rounded transition-colors duration-200 ${
+                isActive
+                  ? "bg-[#241705] text-white"
+                  : "text-white hover:bg-[#F09410]"
+              }`
+            }
+          >
+            <span className="font-medium">Overview</span>
+          </NavLink>
+          <NavLink
             to="/dashboard/profile"
             onClick={() => setIsOpen(false)}
             className={({ isActive }) =>
