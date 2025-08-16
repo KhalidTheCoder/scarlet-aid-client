@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../providers/AuthContext";
@@ -8,13 +8,27 @@ import Table from "../components/Table";
 import { Eye } from "lucide-react";
 import Title from "../components/Title";
 
+const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+
+const fetchDistricts = async () => {
+  const res = await fetch("/district.json");
+  if (!res.ok) throw new Error("Failed to fetch districts");
+  const json = await res.json();
+  const table = json.find(
+    (item) => item.type === "table" && item.name === "districts"
+  );
+  return table?.data || [];
+};
+
 const fetchPendingRequests = async ({ queryKey }) => {
-  const [, { page, limit }, axios] = queryKey;
+  const [, { page, limit, bloodGroup, district }, axios] = queryKey;
   const res = await axios.get("/donation-requests/public", {
     params: {
       status: "pending",
       page,
       limit,
+      bloodGroup: bloodGroup || "",
+      district: district || "",
     },
   });
   return res.data;
@@ -28,8 +42,18 @@ const DonationRequests = () => {
   const [page, setPage] = useState(1);
   const limit = 10;
 
+  const [filters, setFilters] = useState({
+    bloodGroup: "",
+    district: "",
+  });
+
+  const [districts, setDistricts] = useState([]);
+  useEffect(() => {
+    fetchDistricts().then(setDistricts).catch(console.error);
+  }, []);
+
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["pendingDonationRequests", { page, limit }, axios],
+    queryKey: ["pendingDonationRequests", { page, limit, ...filters }, axios],
     queryFn: fetchPendingRequests,
     keepPreviousData: true,
   });
@@ -88,6 +112,39 @@ const DonationRequests = () => {
         <div className="mt-5 mb-15 flex justify-center">
           <Title>Pending Donation Requests</Title>
         </div>
+
+        <div className="flex justify-center items-center gap-5 mb-6">
+          <select
+            className="w-full sm:max-w-xs px-4 py-2 font-medium bg-white text-[#362E24] text-sm rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#AF3E3E] transition-all duration-200"
+            value={filters.bloodGroup}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, bloodGroup: e.target.value }))
+            }
+          >
+            <option value="">All Blood Group</option>
+            {bloodGroups.map((bg) => (
+              <option key={bg} value={bg}>
+                {bg}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className="w-full sm:max-w-xs px-4 py-2 font-medium bg-white text-[#362E24] text-sm rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#AF3E3E] transition-all duration-200"
+            value={filters.district}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, district: e.target.value }))
+            }
+          >
+            <option value="">All District</option>
+            {districts.map((d) => (
+              <option key={d.id} value={d.name}>
+                {d.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <Table
           columns={columns}
           data={requests}
