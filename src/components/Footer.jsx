@@ -67,28 +67,28 @@ const Footer = () => {
           </p>
           <div className="flex gap-4 text-lg text-white/90">
             <a
-              href="#"
+              href="https://www.facebook.com/khalid.ahsan.562?mibextid=wwXIfr&rdid=t1OkQEpQZq8ary9s&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1A6Ycda74w%2F%3Fmibextid%3DwwXIfr"
               aria-label="Facebook"
               className="hover:text-[#FDD0C7] transition duration-200"
             >
               <FaFacebookF />
             </a>
             <a
-              href="#"
+              href="https://x.com/khalidahsan24?s=21"
               aria-label="Twitter"
               className="hover:text-[#FDD0C7] transition duration-200"
             >
               <FaTwitter />
             </a>
             <a
-              href="#"
+              href="https://www.instagram.com/soakhalid?igsh=MWs3MjMzbzZ1bmtnNw%3D%3D&utm_source=qr"
               aria-label="Instagram"
               className="hover:text-[#FDD0C7] transition duration-200"
             >
               <FaInstagram />
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/khalid24/"
               aria-label="LinkedIn"
               className="hover:text-[#FDD0C7] transition duration-200"
             >

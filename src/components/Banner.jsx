@@ -33,15 +33,15 @@ const Banner = () => {
       secondary: "Search Donors",
       secondaryLink: "/searchDonor",
     },
-    {
-      img: "https://i.ibb.co.com/JWjkpW7P/ngu.jpg",
-      title: "Your Health, Our Mission",
-      desc: "Connecting communities with lifesaving donations and medical support across the nation.",
-      primary: "Get Started",
-      primaryLink: "/registration",
-      secondary: "Find Donors",
-      secondaryLink: "/searchDonor",
-    },
+    // {
+    //   img: "https://i.ibb.co.com/JWjkpW7P/ngu.jpg",
+    //   title: "Your Health, Our Mission",
+    //   desc: "Connecting communities with lifesaving donations and medical support across the nation.",
+    //   primary: "Get Started",
+    //   primaryLink: "/registration",
+    //   secondary: "Find Donors",
+    //   secondaryLink: "/searchDonor",
+    // },
   ];
 
   return (

@@ -155,28 +155,28 @@ const ContactUs = () => {
             <p className="text-sm font-medium text-gray-500 mb-2">Follow Us</p>
             <div className="flex gap-4 text-[#D43F00] text-xl">
               <a
-                href="#"
+                href="https://www.facebook.com/khalid.ahsan.562?mibextid=wwXIfr&rdid=t1OkQEpQZq8ary9s&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1A6Ycda74w%2F%3Fmibextid%3DwwXIfr"
                 aria-label="Facebook"
                 className="hover:text-[#A53000] transition"
               >
                 <FaFacebookF />
               </a>
               <a
-                href="#"
+                href="https://x.com/khalidahsan24?s=21"
                 aria-label="Twitter"
                 className="hover:text-[#A53000] transition"
               >
                 <FaTwitter />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/soakhalid?igsh=MWs3MjMzbzZ1bmtnNw%3D%3D&utm_source=qr"
                 aria-label="Instagram"
                 className="hover:text-[#A53000] transition"
               >
                 <FaInstagram />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/khalid24/"
                 aria-label="LinkedIn"
                 className="hover:text-[#A53000] transition"
               >
