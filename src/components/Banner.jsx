@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import img1 from "../assets/woman.jpg";
-import img2 from "../assets/ob.jpg";
 import { useNavigate } from "react-router";
 
 const Banner = () => {
@@ -27,7 +25,7 @@ const Banner = () => {
 
   const slides = [
     {
-      img: img1,
+      img: "https://i.ibb.co.com/bg3Mc3Tf/nguy.jpg",
       title: "Donate Blood, Save Lives",
       desc: "Become a part of something meaningful. Donate blood or connect with a nearby donor. Every drop makes a difference.",
       primary: "Join as a Donor",
@@ -36,7 +34,7 @@ const Banner = () => {
       secondaryLink: "/searchDonor",
     },
     {
-      img: img2,
+      img: "https://i.ibb.co.com/JWjkpW7P/ngu.jpg",
       title: "Your Health, Our Mission",
       desc: "Connecting communities with lifesaving donations and medical support across the nation.",
       primary: "Get Started",
