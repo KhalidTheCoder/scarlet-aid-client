@@ -1,42 +1,56 @@
 import React from "react";
 import CountUp from "react-countup";
-import { FaExclamationCircle, FaCity, FaHeartbeat, FaCalendarAlt } from "react-icons/fa";
+import {
+  FaExclamationCircle,
+  FaCity,
+  FaHeartbeat,
+  FaCalendarAlt,
+} from "react-icons/fa";
+
+const stats = [
+  {
+    icon: <FaExclamationCircle />,
+    count: 124,
+    label: "Urgent Requests Fulfilled",
+    description: "Quickly responding to critical blood donation needs.",
+  },
+  {
+    icon: <FaCity />,
+    count: 64,
+    label: "Cities Covered",
+    description: "Our services reach multiple cities across the country.",
+  },
+  {
+    icon: <FaHeartbeat />,
+    count: 1020,
+    label: "Lives Impacted",
+    description: "Through donors' contributions, lives are saved every day.",
+  },
+  {
+    icon: <FaCalendarAlt />,
+    count: 18,
+    label: "Blood Drives Organized",
+    description: "Regular events to encourage community blood donations.",
+  },
+];
 
 const StatsSection = () => {
-  const stats = [
-    {
-      icon: <FaExclamationCircle className="text-[#D43F00] text-4xl" />,
-      count: 124,
-      label: "Urgent Requests Fulfilled",
-      description: "Quickly responding to critical blood donation needs.",
-    },
-    {
-      icon: <FaCity className="text-[#F09410] text-4xl" />,
-      count: 64,
-      label: "Cities Covered",
-      description: "Our services reach multiple cities across the country.",
-    },
-    {
-      icon: <FaHeartbeat className="text-[#D43F00] text-4xl" />,
-      count: 1020,
-      label: "Lives Impacted",
-      description: "Through donors' contributions, lives are saved every day.",
-    },
-    {
-      icon: <FaCalendarAlt className="text-[#F09410] text-4xl" />,
-      count: 18,
-      label: "Blood Drives Organized",
-      description: "Regular events to encourage community blood donations.",
-    },
-  ];
-
   return (
-    <section className="py-20">
+    <section className="py-20 relative">
       <div className="max-w-7xl mx-auto px-6 md:px-10 text-center">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-[#D43F00] mb-3">
+        <h2
+          data-aos="fade-down"
+          data-aos-duration="800"
+          className="text-4xl md:text-5xl font-extrabold text-[#BC430D] mb-3"
+        >
           Our Impact in Numbers
         </h2>
-        <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto mb-12 font-medium">
+        <p
+          data-aos="fade-up"
+          data-aos-duration="800"
+          data-aos-delay="200"
+          className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto mb-12 font-medium"
+        >
           See how our community and donors are making a difference every day.
         </p>
 
@@ -44,14 +58,24 @@ const StatsSection = () => {
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className="bg-white shadow-xl rounded-3xl p-8 flex flex-col items-center text-center transition-transform transform hover:-translate-y-2 hover:shadow-2xl"
+              data-aos="zoom-in"
+              data-aos-delay={`${idx * 150}`}
+              data-aos-duration="800"
+              className="relative bg-gradient-to-br from-[#FDD0C7] via-[#FEE5DA] to-[#FDD0C7] p-8 rounded-3xl shadow-xl text-center font-medium flex flex-col items-center transition-all duration-300 hover:shadow-2xl hover:scale-[1.03]"
             >
-              <div className="mb-4">{stat.icon}</div>
+              <div className="text-[#D43F00] text-5xl mb-4">{stat.icon}</div>
+
               <h3 className="text-4xl font-bold text-[#241705]">
                 <CountUp end={stat.count} duration={2} />
               </h3>
-              <p className="text-lg font-semibold text-[#D43F00] mt-2">{stat.label}</p>
-              <p className="text-sm text-gray-600 mt-1">{stat.description}</p>
+
+              <p className="text-lg font-semibold text-[#D43F00] mt-2">
+                {stat.label}
+              </p>
+
+              <p className="text-sm text-gray-700 mt-1">{stat.description}</p>
+
+              <div className="absolute -top-6 -right-6 w-16 h-16 rounded-full bg-[#D43F00]/10 blur-2xl pointer-events-none"></div>
             </div>
           ))}
         </div>

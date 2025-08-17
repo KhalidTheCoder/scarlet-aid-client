@@ -11,7 +11,7 @@ import logoImg from "../assets/logo.JPG";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-[#BC430D] to-[#241705] text-white font-inter pt-16 pb-10 shadow-lg">
+    <footer className="bg-[#BC430D] text-white font-inter pt-16 pb-10 shadow-lg">
       <div className="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
           <Link to="/" className="flex items-center gap-2 mb-4">

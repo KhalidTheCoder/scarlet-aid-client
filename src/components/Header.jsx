@@ -32,7 +32,7 @@ const Header = () => {
     "px-3 py-2 text-sm font-medium rounded hover:bg-white/20 transition-colors duration-200 tracking-wide";
 
   return (
-    <nav className="sticky top-0 z-50 bg-gradient-to-r from-[#BC430d] to-[#241705] text-white shadow-md font-inter">
+    <nav className="sticky top-0 z-50 bg-[#BC430D] text-white shadow-md font-inter">
       <div className="max-w-7xl mx-auto py-4 flex justify-between items-center">
         {/* Logo */}
 

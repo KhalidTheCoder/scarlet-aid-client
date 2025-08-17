@@ -1,78 +1,101 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import Slider from "react-slick";
 import { motion } from "framer-motion";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import img1 from "../assets/woman.jpg";
-import img2 from "../assets/360.jpg";
-import img3 from "../assets/medict.jpg";
+import img2 from "../assets/ob.jpg";
+import { useNavigate } from "react-router";
 
 const Banner = () => {
   const navigate = useNavigate();
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 800,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 4500,
+    pauseOnHover: true,
+    fade: true,
+    arrows: false,
+    cssEase: "ease-in-out",
+  };
+
+  const slides = [
+    {
+      img: img1,
+      title: "Donate Blood, Save Lives",
+      desc: "Become a part of something meaningful. Donate blood or connect with a nearby donor. Every drop makes a difference.",
+      primary: "Join as a Donor",
+      primaryLink: "/registration",
+      secondary: "Search Donors",
+      secondaryLink: "/searchDonor",
+    },
+    {
+      img: img2,
+      title: "Your Health, Our Mission",
+      desc: "Connecting communities with lifesaving donations and medical support across the nation.",
+      primary: "Get Started",
+      primaryLink: "/registration",
+      secondary: "Find Donors",
+      secondaryLink: "/searchDonor",
+    },
+  ];
+
   return (
-    <div className="bg-gradient-to-br from-[#FFF7F1] via-[#FFEBD2] to-[#FFD4B2] rounded-3xl shadow-xl max-w-7xl mx-auto my-14 overflow-hidden">
-      <div className="flex flex-col-reverse md:flex-row items-center justify-between px-6 md:px-12 lg:px-20 py-20 gap-12 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, x: -60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-          className="flex-1 space-y-6 text-center md:text-left"
-        >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#D43F00] leading-tight">
-            Donate Blood, Save Lives
-          </h1>
-          <p className="text-gray-600 text-base font-medium sm:text-lg max-w-xl md:max-w-md mx-auto md:mx-0">
-            Become a part of something meaningful. Donate blood or connect with
-            a nearby donor. Every drop makes a difference.
-          </p>
+    <div className="max-w-7xl mx-auto my-14">
+      <div className="overflow-hidden rounded-3xl">
+        <Slider {...settings}>
+          {slides.map((slide, index) => (
+            <div key={index} className="relative">
+              <img
+                src={slide.img}
+                alt={`Slide ${index + 1}`}
+                className="w-full h-[550px] object-cover rounded-3xl"
+              />
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-            <button
-              onClick={() => navigate("/registration")}
-              className="px-6 py-3 bg-[#D43F00] hover:bg-[#A53000] text-white rounded-xl font-semibold shadow-md hover:shadow-xl transition duration-300"
-            >
-              Join as a Donor
-            </button>
-            <button
-              onClick={() => navigate("/searchDonor")}
-              className="px-6 py-3 bg-white text-[#D43F00] border-2 border-[#D43F00] hover:bg-[#D43F00] hover:text-white rounded-xl font-semibold shadow-md hover:shadow-xl transition duration-300"
-            >
-              Search Donors
-            </button>
-          </div>
-        </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent rounded-3xl flex items-center">
+                <motion.div
+                  initial={{ opacity: 0, x: -80 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  className="px-6 md:px-16 space-y-6 max-w-2xl"
+                >
+                  <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-wide text-white drop-shadow-2xl">
+                    {slide.title.split(",")[0]},
+                    <span className="text-[#e13d00]">
+                      {" "}
+                      {slide.title.split(",")[1]}
+                    </span>
+                  </h1>
 
-        <motion.div
-          className="flex-1 relative flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0 h-auto md:h-[340px] lg:h-[380px]"
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <motion.img
-            src={img1}
-            alt="Main Blood Donation"
-            className="w-40 sm:w-48 md:w-60 h-40 sm:h-48 md:h-60 object-cover rounded-2xl shadow-2xl border-[6px] border-white z-20 md:static"
-            animate={{ y: [0, -10, 0], rotate: [0, 1.5, -1.5, 0] }}
-            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-          />
+                  <p className="text-white/90 text-base sm:text-lg md:text-xl font-medium leading-relaxed drop-shadow-md">
+                    {slide.desc}
+                  </p>
 
-          <motion.img
-            src={img3}
-            alt="Secondary Donation 1"
-            className="w-36 sm:w-40 md:w-48 h-36 sm:h-40 md:h-48 object-cover rounded-2xl shadow-xl border-[5px] border-white opacity-80 z-10 
-              md:absolute md:top-4 md:left-0"
-            animate={{ y: [0, 12, 0], rotate: [0, -2, 1, 0] }}
-            transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
-          />
-
-          <motion.img
-            src={img2}
-            alt="Secondary Donation 2"
-            className="w-36 sm:w-40 md:w-48 h-36 sm:h-40 md:h-48 object-cover rounded-2xl shadow-xl border-[5px] border-white opacity-80 z-10 
-              md:absolute md:bottom-4 md:right-0"
-            animate={{ y: [0, 16, 0], rotate: [0, 2, -1, 0] }}
-            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-          />
-        </motion.div>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <button
+                      onClick={() => navigate(slide.primaryLink)}
+                      className="px-7 py-3 bg-[#BC430D] hover:bg-[#e13d00] text-white text-lg rounded-xl font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                    >
+                      {slide.primary}
+                    </button>
+                    <button
+                      onClick={() => navigate(slide.secondaryLink)}
+                      className="px-7 py-3 bg-white/90 text-[#BC430D] border-2 border-[#BC430D] hover:bg-[#BC430D] hover:text-white text-lg rounded-xl font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                    >
+                      {slide.secondary}
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          ))}
+        </Slider>
       </div>
     </div>
   );
